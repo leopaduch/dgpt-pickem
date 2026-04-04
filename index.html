@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DGPT Pick'em</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E8541A;
+  --orange-dim: rgba(232,84,26,0.15);
+  --orange-border: rgba(232,84,26,0.25);
+  --navy: #0a0d1a;
+  --navy2: #111425;
+  --navy3: #181d32;
+  --card: #1e2338;
+  --card2: #242840;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #eeecea;
+  --muted: #7a7f9a;
+  --green: #34d068;
+  --green-dim: rgba(52,208,104,0.12);
+  --green-border: rgba(52,208,104,0.25);
+  --red: #f04545;
+  --red-dim: rgba(240,69,69,0.12);
+  --gold: #f0c040;
+  --gold-dim: rgba(240,192,64,0.12);
+  --leo: #34d068;
+  --joe: #E8541A;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;background:var(--navy);overflow:hidden;}
+body{font-family:'Barlow',sans-serif;color:var(--text);max-width:430px;margin:0 auto;display:flex;flex-direction:column;}
+
+/* ── SCROLLABLE MAIN ── */
+.app-wrap{display:flex;flex-direction:column;height:100vh;}
+.main-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0 0 72px;}
+.main-scroll::-webkit-scrollbar{display:none;}
+
+/* ── HEADER ── */
+.header{background:var(--navy2);border-bottom:1px solid var(--border);padding:14px 16px 0;position:sticky;top:0;z-index:50;flex-shrink:0;}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;letter-spacing:1px;text-transform:uppercase;}
+.logo span{color:var(--orange);}
+.user-chip{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:5px 12px 5px 8px;cursor:pointer;}
+.user-avatar{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;}
+.user-avatar.leo{background:var(--green-dim);color:var(--leo);}
+.user-avatar.joe{background:var(--orange-dim);color:var(--joe);}
+.user-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;}
+.nav-tabs{display:flex;}
+.nav-tab{flex:1;text-align:center;padding:10px 2px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.5px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;text-transform:uppercase;white-space:nowrap;}
+.nav-tab.active{color:var(--orange);border-bottom-color:var(--orange);}
+
+/* ── VIEWS ── */
+.view{display:none;padding:16px;}
+.view.active{display:block;}
+
+/* ── LOGIN SCREEN ── */
+.login-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;background:var(--navy);}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+.login-logo span{color:var(--orange);}
+.login-sub{font-size:13px;color:var(--muted);margin-bottom:40px;}
+.login-label{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
+.pin-display{display:flex;gap:10px;margin-bottom:28px;}
+.pin-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--border2);transition:all 0.15s;}
+.pin-dot.filled{background:var(--orange);border-color:var(--orange);}
+.pin-error .pin-dot.filled{background:var(--red);border-color:var(--red);}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:240px;}
+.key{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:700;text-align:center;cursor:pointer;transition:all 0.1s;color:var(--text);}
+.key:active{background:var(--card2);transform:scale(0.95);}
+.key.del{font-size:18px;color:var(--muted);}
+.key.empty{background:transparent;border-color:transparent;cursor:default;}
+.login-error{font-size:13px;color:var(--red);margin-top:16px;min-height:20px;text-align:center;}
+.login-switch{font-size:12px;color:var(--muted);margin-top:24px;text-align:center;}
+.login-switch span{color:var(--orange);cursor:pointer;text-decoration:underline;}
+
+/* ── SHARED COMPONENTS ── */
+.section-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+.card2{background:var(--navy3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+
+/* ── RESULTS TAB ── */
+.live-event-card{background:var(--navy3);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.live-card-top{padding:14px 16px 12px;border-bottom:1px solid var(--border);}
+.live-top-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px;}
+.live-event-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;line-height:1.1;}
+.live-badge{display:flex;align-items:center;gap:5px;background:var(--red-dim);border:1px solid rgba(240,69,69,0.3);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite;}
+.countdown-badge{background:var(--orange-dim);border:1px solid var(--orange-border);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.live-event-sub{font-size:12px;color:var(--muted);}
+.live-round-row{display:flex;gap:6px;padding:10px 16px;overflow-x:auto;scrollbar-width:none;}
+.live-round-row::-webkit-scrollbar{display:none;}
+.round-chip{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;flex-shrink:0;background:transparent;}
+.round-chip.active{background:var(--orange);border-color:var(--orange);color:white;}
+.countdown-digits{display:flex;justify-content:center;gap:8px;padding:16px 16px 12px;}
+.cd-unit{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.cd-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:900;line-height:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;min-width:58px;text-align:center;}
+.cd-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.cd-sep{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;color:var(--muted);margin-top:6px;}
+.week-pts-row{display:flex;justify-content:center;gap:8px;padding:0 16px 14px;}
+.pick-chip{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;}
+.pick-chip.leo{background:var(--green-dim);color:var(--leo);}
+.pick-chip.joe{background:var(--orange-dim);color:var(--joe);}
+.pick-chip.neutral{background:rgba(255,255,255,0.06);color:var(--muted);}
+.pick-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.pick-summary-card{border-radius:10px;padding:10px 12px;border:1px solid var(--border);}
+.pick-summary-card.leo{background:rgba(52,208,104,0.06);border-color:var(--green-border);}
+.pick-summary-card.joe{background:rgba(232,84,26,0.06);border-color:var(--orange-border);}
+.psc-title{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.psc-title.leo{color:var(--leo);}
+.psc-title.joe{color:var(--joe);}
+.psc-player{font-size:12px;font-weight:500;display:flex;justify-content:space-between;align-items:center;padding:3px 0;}
+.pos-tag{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;}
+.pos-tag.lead{color:var(--gold);}
+.pos-tag.good{color:var(--green);}
+.pos-tag.mid{color:var(--muted);}
+.pos-tag.out{color:var(--red);}
+.legend{display:flex;gap:14px;margin-bottom:10px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);}
+.leg-bar{width:12px;height:12px;border-radius:2px;}
+.leg-bar.leo{background:rgba(52,208,104,0.25);border-left:3px solid var(--leo);}
+.leg-bar.joe{background:rgba(232,84,26,0.25);border-left:3px solid var(--joe);}
+.leaderboard{border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:14px;}
+.lb-header{display:flex;padding:6px 14px 6px 46px;border-bottom:1px solid var(--border);background:rgba(255,255,255,0.02);}
+.lb-header span{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.lb-header span:first-child{flex:1;}
+.lb-header span:last-child{min-width:40px;text-align:right;}
+.lb-row{display:flex;align-items:center;gap:8px;padding:9px 14px;border-bottom:1px solid var(--border);transition:background 0.15s;}
+.lb-row:last-child{border-bottom:none;}
+.lb-row.leo-pick{background:rgba(52,208,104,0.06);border-left:3px solid var(--leo);}
+.lb-row.joe-pick{background:rgba(232,84,26,0.06);border-left:3px solid var(--joe);}
+.lb-row:not(.leo-pick):not(.joe-pick){border-left:3px solid transparent;}
+.lb-rank{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;min-width:22px;color:var(--muted);}
+.lb-rank.top{color:var(--gold);}
+.lb-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.lb-dot.leo{background:var(--leo);}
+.lb-dot.joe{background:var(--joe);}
+.lb-dot.none{background:transparent;}
+.lb-name{flex:1;font-size:13px;font-weight:500;}
+.lb-thru{font-size:11px;color:var(--muted);min-width:28px;text-align:center;}
+.lb-score{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;min-width:40px;text-align:right;}
+.lb-score.under{color:var(--green);}
+.lb-score.even{color:var(--muted);}
+.lb-score.over{color:var(--red);}
+.prev-event-hdr{background:var(--card2);border:1px solid var(--border);border-radius:10px 10px 0 0;padding:12px 14px;border-bottom:none;}
+.prev-event-hdr-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;}
+.prev-event-hdr-date{font-size:11px;color:var(--muted);}
+.winner-banner{background:var(--gold-dim);border:1px solid rgba(240,192,64,0.2);border-top:none;padding:8px 14px;display:flex;align-items:center;gap:8px;font-size:12px;}
+.winner-name{font-weight:600;color:var(--gold);}
+.winner-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:auto;}
+.winner-tag.leo{background:var(--green-dim);color:var(--leo);}
+.winner-tag.joe{background:var(--orange-dim);color:var(--joe);}
+.winner-tag.push{background:rgba(255,255,255,0.06);color:var(--muted);}
+.prev-lb{border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;overflow:hidden;margin-bottom:14px;}
+
+/* ── SEASON TAB ── */
+.score-banner{background:var(--navy3);border:1px solid var(--border);border-radius:12px;padding:20px 16px 16px;margin-bottom:12px;display:flex;align-items:center;gap:12px;}
+.player-score{flex:1;text-align:center;}
+.score-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;}
+.score-num{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;line-height:1;}
+.score-num.leo{color:var(--leo);}
+.score-num.joe{color:var(--joe);}
+.score-pts{font-size:11px;color:var(--muted);margin-top:2px;}
+.vs-div{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--muted);}
+.rollover-pill{background:var(--orange-dim);border:1px solid var(--orange-border);color:var(--orange);font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:7px 14px;border-radius:20px;text-align:center;margin-bottom:14px;letter-spacing:0.5px;}
+.week-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:8px;}
+.wc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.wc-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
+.wc-pts{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.wc-pts.leo{background:var(--green-dim);color:var(--leo);}
+.wc-pts.joe{background:var(--orange-dim);color:var(--joe);}
+.wc-pts.push{background:rgba(255,255,255,0.06);color:var(--muted);}
+.wc-detail{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.winner-pill{background:var(--gold-dim);color:var(--gold);font-size:11px;font-weight:600;padding:2px 7px;border-radius:8px;}
+.banned-pill{background:var(--red-dim);color:var(--red);font-size:11px;font-weight:600;padding:2px 7px;border-radius:8px;}
+
+/* ── DRAFT TAB ── */
+.draft-event-card{background:var(--navy3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px;}
+.dec-name{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:2px;}
+.dec-date{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.dec-order{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--border);}
+.dec-order-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;}
+.roster-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.roster-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;}
+.rc-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.rc-title.leo{color:var(--leo);}
+.rc-title.joe{color:var(--joe);}
+.rc-player{font-size:12px;font-weight:500;padding:5px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;}
+.rc-player:last-child{border-bottom:none;}
+.rc-num{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--muted);min-width:14px;}
+.rc-forced{font-size:11px;color:var(--muted);font-style:italic;}
+.draft-cta{background:var(--orange-dim);border:1px solid var(--orange-border);border-radius:10px;padding:14px;margin-bottom:14px;}
+.draft-cta-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.draft-cta-sub{font-size:12px;color:var(--muted);margin-bottom:10px;}
+.btn{background:var(--orange);color:white;border:none;border-radius:8px;padding:10px 20px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;width:100%;transition:all 0.15s;}
+.btn:active{transform:scale(0.98);opacity:0.9;}
+.btn.secondary{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.btn.green{background:var(--green);}
+.draft-closed{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;margin-bottom:14px;}
+.draft-closed-label{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px;}
+.draft-closed-sub{font-size:12px;color:var(--muted);}
+
+/* ── DRAFT SUBMISSION ── */
+.draft-submit-wrap{padding:16px;}
+.ds-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.ds-back{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:var(--text);}
+.ds-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;text-transform:uppercase;}
+.ds-section{margin-bottom:24px;}
+.ds-section-title{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:4px;}
+.ds-section-sub{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.player-pool{display:flex;flex-direction:column;gap:6px;}
+.pool-player{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:all 0.15s;}
+.pool-player.selected{border-color:var(--orange);background:var(--orange-dim);}
+.pool-player.selected.leo-sel{border-color:var(--green);background:var(--green-dim);}
+.pool-player.banned{opacity:0.4;cursor:not-allowed;}
+.pool-player.ranked{opacity:0.5;}
+.pp-rank{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;width:28px;text-align:center;color:var(--muted);}
+.pp-rank.set{color:var(--orange);}
+.pp-rank.set.leo-r{color:var(--green);}
+.pp-name{flex:1;font-size:13px;font-weight:500;}
+.pp-pts{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);}
+.pp-banned{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--red);background:var(--red-dim);padding:2px 6px;border-radius:6px;}
+.ranked-list{display:flex;flex-direction:column;gap:6px;}
+.ranked-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:10px;}
+.ri-rank{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;width:24px;color:var(--orange);}
+.ri-rank.leo-r{color:var(--green);}
+.ri-name{flex:1;font-size:13px;font-weight:500;}
+.ri-remove{font-size:16px;color:var(--muted);cursor:pointer;padding:2px 6px;}
+.submit-footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--navy2);border-top:1px solid var(--border);padding:12px 16px 20px;display:flex;gap:10px;}
+.progress-bar-wrap{background:var(--card);border-radius:4px;height:4px;margin-bottom:14px;overflow:hidden;}
+.progress-bar{height:100%;background:var(--orange);border-radius:4px;transition:width 0.3s;}
+.progress-bar.leo-p{background:var(--green);}
+
+/* ── STANDINGS TAB ── */
+.st-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);}
+.st-row:last-child{border-bottom:none;}
+.st-rank{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--muted);min-width:26px;}
+.st-rank.top{color:var(--gold);}
+.st-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;flex-shrink:0;}
+.st-info{flex:1;}
+.st-name{font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.st-sub{font-size:11px;color:var(--muted);}
+.st-pts{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;}
+.banned-tag{background:var(--red-dim);color:var(--red);font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;}
+.top10-tag{background:var(--gold-dim);color:var(--gold);font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;}
+
+/* ── RULES TAB ── */
+.rules-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;}
+.rules-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
+.rules-body{font-size:13px;color:var(--muted);line-height:1.7;}
+.rules-body strong{color:var(--text);}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;background:var(--navy2);border-top:1px solid var(--border);display:flex;padding:8px 0 14px;z-index:50;}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 0;}
+.bnav-icon{font-size:16px;color:var(--muted);transition:color 0.2s;}
+.bnav-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;transition:color 0.2s;}
+.bnav-item.active .bnav-icon,.bnav-item.active .bnav-label{color:var(--orange);}
+
+/* ── SUCCESS SCREEN ── */
+.success-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;padding:32px 24px;}
+.success-icon{font-size:56px;margin-bottom:16px;}
+.success-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.success-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LOGIN SCREEN ══════════ -->
+<div id="login-screen" class="login-wrap">
+  <div class="login-logo">DGPT <span>Pick'em</span></div>
+  <div class="login-sub">Leo vs Joe · 2026 Season</div>
+  <div class="login-label" id="login-who-label">Enter Leo's PIN</div>
+  <div class="pin-display" id="pin-display">
+    <div class="pin-dot" id="pd0"></div>
+    <div class="pin-dot" id="pd1"></div>
+    <div class="pin-dot" id="pd2"></div>
+    <div class="pin-dot" id="pd3"></div>
+  </div>
+  <div class="keypad">
+    <div class="key" onclick="pinKey('1')">1</div>
+    <div class="key" onclick="pinKey('2')">2</div>
+    <div class="key" onclick="pinKey('3')">3</div>
+    <div class="key" onclick="pinKey('4')">4</div>
+    <div class="key" onclick="pinKey('5')">5</div>
+    <div class="key" onclick="pinKey('6')">6</div>
+    <div class="key" onclick="pinKey('7')">7</div>
+    <div class="key" onclick="pinKey('8')">8</div>
+    <div class="key" onclick="pinKey('9')">9</div>
+    <div class="key empty"></div>
+    <div class="key" onclick="pinKey('0')">0</div>
+    <div class="key del" onclick="pinDel()">⌫</div>
+  </div>
+  <div class="login-error" id="login-error"></div>
+  <div class="login-switch">Not Leo? <span onclick="switchUser()">Switch to Joe</span></div>
+</div>
+
+<!-- ══════════ MAIN APP ══════════ -->
+<div id="app" style="display:none;" class="app-wrap">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">DGPT <span>Pick'em</span></div>
+      <div class="user-chip" onclick="logout()">
+        <div class="user-avatar" id="user-avatar-chip">L</div>
+        <div class="user-name" id="user-name-chip">Leo</div>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="switchTab('results')">Results</div>
+      <div class="nav-tab" onclick="switchTab('season')">Season</div>
+      <div class="nav-tab" onclick="switchTab('draft')">Draft</div>
+      <div class="nav-tab" onclick="switchTab('standings')">Standings</div>
+      <div class="nav-tab" onclick="switchTab('rules')">Rules</div>
+    </div>
+  </div>
+
+  <div class="main-scroll" id="main-scroll">
+
+    <!-- ── RESULTS TAB ── -->
+    <div class="view active" id="view-results">
+      <div id="results-content"></div>
+    </div>
+
+    <!-- ── SEASON TAB ── -->
+    <div class="view" id="view-season">
+      <div class="score-banner">
+        <div class="player-score">
+          <div class="score-name">Joe</div>
+          <div class="score-num joe" id="score-joe">40</div>
+          <div class="score-pts">points</div>
+        </div>
+        <div class="vs-div">VS</div>
+        <div class="player-score">
+          <div class="score-name">Leo</div>
+          <div class="score-num leo" id="score-leo">20</div>
+          <div class="score-pts">points</div>
+        </div>
+      </div>
+      <div class="rollover-pill" id="rollover-pill">⚡ Week 4 worth 20 pts — no rollover active</div>
+      <div class="section-label">Season History</div>
+      <div class="week-card">
+        <div class="wc-header">
+          <div class="wc-title">Week 1 — Jonesboro Open</div>
+          <div class="wc-pts push">PUSH</div>
+        </div>
+        <div class="wc-detail">No picks matched the winner · 20 pts rolled to Week 2</div>
+      </div>
+      <div class="week-card">
+        <div class="wc-header">
+          <div class="wc-title">Week 2 — Las Vegas Challenge</div>
+          <div class="wc-pts joe">JOE +40</div>
+        </div>
+        <div class="wc-detail">
+          <span class="winner-pill">🏆 Gannon Buhr</span>
+          Joe collected 40 pts (incl. rollover)
+        </div>
+      </div>
+      <div class="week-card">
+        <div class="wc-header">
+          <div class="wc-title">Week 3 — Waco Charity Open</div>
+          <div class="wc-pts leo">LEO +20</div>
+        </div>
+        <div class="wc-detail">
+          <span class="winner-pill">🏆 Gannon Buhr</span>
+          Leo +20 pts
+          <span class="banned-pill">Gannon banned after this</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DRAFT TAB ── -->
+    <div class="view" id="view-draft">
+      <div id="draft-content"></div>
+    </div>
+
+    <!-- ── DRAFT SUBMISSION SCREEN ── -->
+    <div class="view" id="view-submit">
+      <div class="draft-submit-wrap" id="submit-content"></div>
+    </div>
+
+    <!-- ── STANDINGS TAB ── -->
+    <div class="view" id="view-standings">
+      <div class="section-label">DGPT MPO Standings</div>
+      <div id="standings-list"></div>
+    </div>
+
+    <!-- ── RULES TAB ── -->
+    <div class="view" id="view-rules">
+      <div class="rules-card">
+        <div class="rules-title" style="color:var(--orange);">How It Works</div>
+        <div class="rules-body">Each week, Leo and Joe each <strong>rank 8 MPO players</strong> as their draft pool. The app resolves picks in snake draft order — whoever went second last week goes first this week. Your top available player gets drafted to your team.<br><br>Each player also <strong>ranks 6 top-10 DGPT players</strong> to assign to their opponent. The opponent's highest-ranked available player is forced onto their roster.<br><br>Draft submissions open <strong>Monday</strong> and close <strong>Wednesday at midnight</strong> each tournament week.</div>
+      </div>
+      <div class="rules-card">
+        <div class="rules-title">Scoring</div>
+        <div class="rules-body">Each week is worth <strong>20 points</strong>. If one of your 3 players wins the tournament outright, you collect the points. If no pick wins, the week pushes and <strong>points roll over</strong> to the following week, adding to the next week's pot.</div>
+      </div>
+      <div class="rules-card">
+        <div class="rules-title">Snake Draft Order</div>
+        <div class="rules-body">Week 1: Joe picks first. The order <strong>flips every week</strong> — whoever went first last week goes second next week.</div>
+      </div>
+      <div class="rules-card" style="background:var(--red-dim);border-color:rgba(240,69,69,0.2);">
+        <div class="rules-title" style="color:var(--red);">Banned Players</div>
+        <div class="rules-body">
+          <div style="display:flex;align-items:center;gap:10px;margin-top:4px;">
+            <div class="st-avatar" style="background:var(--red-dim);color:var(--red);">GB</div>
+            <div>
+              <div style="font-size:14px;font-weight:600;color:var(--text);">Gannon Buhr</div>
+              <div style="font-size:12px;color:var(--muted);">Too dominant. Won weeks 2 & 3. Banned permanently.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end main-scroll -->
+
+  <div class="bottom-nav" id="bottom-nav">
+    <div class="bnav-item active" id="bnav-results" onclick="switchTab('results')">
+      <div class="bnav-icon">📡</div>
+      <div class="bnav-label">Results</div>
+    </div>
+    <div class="bnav-item" id="bnav-season" onclick="switchTab('season')">
+      <div class="bnav-icon">🏆</div>
+      <div class="bnav-label">Season</div>
+    </div>
+    <div class="bnav-item" id="bnav-draft" onclick="switchTab('draft')">
+      <div class="bnav-icon">⬡</div>
+      <div class="bnav-label">Draft</div>
+    </div>
+    <div class="bnav-item" id="bnav-standings" onclick="switchTab('standings')">
+      <div class="bnav-icon">◈</div>
+      <div class="bnav-label">Standings</div>
+    </div>
+    <div class="bnav-item" id="bnav-rules" onclick="switchTab('rules')">
+      <div class="bnav-icon">◎</div>
+      <div class="bnav-label">Rules</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══ DATA ══
+const PINS = { leo: '0037', joe: '4242' };
+const BANNED = ['Gannon Buhr'];
+const MPO_PLAYERS = [
+  {name:'Paul McBeth',pts:'3,420',initials:'PM',col:'#ff7a40'},
+  {name:'Ricky Wysocki',pts:'3,180',initials:'RW',col:'#6ab0f5'},
+  {name:'Calvin Heimburg',pts:'2,940',initials:'CH',col:'#7dcf95'},
+  {name:'Eagle McMahon',pts:'2,710',initials:'EM',col:'#c084f5'},
+  {name:'Adam Hammes',pts:'2,550',initials:'AH',col:'#f5c518'},
+  {name:'Chris Dickerson',pts:'2,380',initials:'CD',col:'#f5a623'},
+  {name:'Simon Lizotte',pts:'2,200',initials:'SL',col:'#50d8c8'},
+  {name:'James Conrad',pts:'2,100',initials:'JC',col:'#e87070'},
+  {name:'Anthony Barela',pts:'1,980',initials:'AB',col:'#a0d870'},
+  {name:'Kevin Jones',pts:'1,860',initials:'KJ',col:'#70a0f5'},
+  {name:'Drew Gibson',pts:'1,740',initials:'DG',col:'#f5d070'},
+  {name:'Brodie Smith',pts:'1,620',initials:'BS',col:'#f57070'},
+  {name:'Niklas Anttila',pts:'1,500',initials:'NA',col:'#70d8f5'},
+  {name:'Matt Orum',pts:'1,380',initials:'MO',col:'#d870c8'},
+  {name:'Chris Clemons',pts:'1,260',initials:'CC',col:'#70f5a0'},
+  {name:'Mason Ford',pts:'1,140',initials:'MF',col:'#f5a070'},
+  {name:'Kyle Klein',pts:'1,020',initials:'KK',col:'#a0c8f5'},
+  {name:'Eric Oakley',pts:'900',initials:'EO',col:'#f5d0a0'},
+  {name:'Ezra Santos',pts:'780',initials:'ES',col:'#c8f570'},
+  {name:'Gannon Buhr',pts:'—',initials:'GB',col:'#f04545'},
+];
+const TOP10 = MPO_PLAYERS.filter(p=>!BANNED.includes(p.name)).slice(0,10);
+const NEXT_EVENT = {name:'Music City Open',date:'Apr 10–13, 2026',location:'Nashville, TN',start:new Date('2026-04-10T09:00:00-05:00')};
+const LIVE = false; // flip to true for live state
+const WEEK = 4;
+// Week 4 placeholder picks (for display only — real picks submitted via draft)
+const WEEK4_PICKS = {
+  leo: ['Paul McBeth','Eagle McMahon'],
+  joe: ['Ricky Wysocki','Adam Hammes'],
+  leo_forced: 'Calvin Heimburg',
+  joe_forced: 'Chris Dickerson'
+};
+const PREV_RESULTS = {
+  event:'Waco Annual Charity Open', date:'Mar 20–22, 2026', location:'Waco, TX',
+  winner:'Gannon Buhr', winner_team:'leo',
+  leaderboard:[
+    {rank:1,name:'Gannon Buhr',score:'-24'},
+    {rank:2,name:'Calvin Heimburg',score:'-22'},
+    {rank:3,name:'Ricky Wysocki',score:'-21'},
+    {rank:4,name:'Eagle McMahon',score:'-20'},
+    {rank:5,name:'Paul McBeth',score:'-19'},
+    {rank:6,name:'Adam Hammes',score:'-18'},
+    {rank:7,name:'Chris Dickerson',score:'-17'},
+    {rank:8,name:'Simon Lizotte',score:'-16'},
+    {rank:9,name:'James Conrad',score:'-15'},
+    {rank:10,name:'Kevin Jones',score:'-15'},
+  ]
+};
+
+// ══ STATE ══
+let currentUser = null; // 'leo' or 'joe'
+let pinBuffer = '';
+let loginTarget = 'leo';
+let currentTab = 'results';
+let draft8 = []; // ranked 8 picks
+let forced6 = []; // ranked 6 forced picks
+let submitStep = 1; // 1=draft8, 2=forced6, 3=confirm
+let countdownTimer = null;
+let submissions = {}; // {leo: {draft8:[], forced6:[]}, joe: ...}
+
+// ══ LOGIN ══
+function switchUser() {
+  loginTarget = loginTarget === 'leo' ? 'joe' : 'leo';
+  pinBuffer = '';
+  updatePinDisplay();
+  document.getElementById('login-who-label').textContent = loginTarget === 'leo' ? "Enter Leo's PIN" : "Enter Joe's PIN";
+  document.querySelector('.login-switch').innerHTML = loginTarget === 'leo'
+    ? 'Not Leo? <span onclick="switchUser()">Switch to Joe</span>'
+    : 'Not Joe? <span onclick="switchUser()">Switch to Leo</span>';
+  document.getElementById('login-error').textContent = '';
+}
+function pinKey(k) {
+  if(pinBuffer.length >= 4) return;
+  pinBuffer += k;
+  updatePinDisplay();
+  if(pinBuffer.length === 4) setTimeout(checkPin, 120);
+}
+function pinDel() { pinBuffer = pinBuffer.slice(0,-1); updatePinDisplay(); }
+function updatePinDisplay() {
+  for(let i=0;i<4;i++) {
+    const d = document.getElementById('pd'+i);
+    d.classList.toggle('filled', i < pinBuffer.length);
+  }
+}
+function checkPin() {
+  if(pinBuffer === PINS[loginTarget]) {
+    currentUser = loginTarget;
+    localStorage.setItem('dgpt_user', currentUser);
+    showApp();
+  } else {
+    document.getElementById('pin-display').classList.add('pin-error');
+    document.getElementById('login-error').textContent = 'Incorrect PIN. Try again.';
+    setTimeout(()=>{
+      pinBuffer=''; updatePinDisplay();
+      document.getElementById('pin-display').classList.remove('pin-error');
+      document.getElementById('login-error').textContent='';
+    },900);
+  }
+}
+function logout() {
+  currentUser = null;
+  localStorage.removeItem('dgpt_user');
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  pinBuffer = ''; updatePinDisplay();
+}
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+  const chip = document.getElementById('user-avatar-chip');
+  chip.className = 'user-avatar ' + currentUser;
+  chip.textContent = currentUser === 'leo' ? 'L' : 'J';
+  document.getElementById('user-name-chip').textContent = currentUser === 'leo' ? 'Leo' : 'Joe';
+  renderResults();
+  renderDraft();
+  renderStandings();
+  switchTab('results');
+}
+
+// ══ TABS ══
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
+    const tabs=['results','season','draft','standings','rules'];
+    t.classList.toggle('active', tabs[i]===tab);
+  });
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+tab).classList.add('active');
+  document.querySelectorAll('.bnav-item').forEach(b=>b.classList.remove('active'));
+  document.getElementById('bnav-'+tab)?.classList.add('active');
+  currentTab = tab;
+  document.getElementById('main-scroll').scrollTop = 0;
+  if(tab==='results') renderResults();
+  if(tab==='draft') renderDraft();
+}
+
+// ══ RESULTS ══
+function isPickedBy(name, team) {
+  const p = WEEK4_PICKS;
+  if(team==='leo') return [p.leo[0],p.leo[1],p.leo_forced].includes(name);
+  if(team==='joe') return [p.joe[0],p.joe[1],p.joe_forced].includes(name);
+  return false;
+}
+function pickClass(name) {
+  if(isPickedBy(name,'leo')) return 'leo-pick';
+  if(isPickedBy(name,'joe')) return 'joe-pick';
+  return '';
+}
+function dotClass(name) {
+  if(isPickedBy(name,'leo')) return 'leo';
+  if(isPickedBy(name,'joe')) return 'joe';
+  return 'none';
+}
+function renderResults() {
+  const el = document.getElementById('results-content');
+  if(LIVE) {
+    el.innerHTML = renderLive();
+  } else {
+    el.innerHTML = renderCountdown();
+  }
+  if(!LIVE) startCountdown();
+}
+function renderCountdown() {
+  const p = WEEK4_PICKS;
+  const leoFirst = (WEEK % 2 === 0) ? false : true; // Week 4: Leo picks first
+  return `
+    <div class="live-event-card">
+      <div class="live-card-top">
+        <div class="live-top-row">
+          <div class="live-event-name">${NEXT_EVENT.name}</div>
+          <div class="countdown-badge">Up Next</div>
+        </div>
+        <div class="live-event-sub">${NEXT_EVENT.date} · ${NEXT_EVENT.location}</div>
+      </div>
+      <div class="countdown-digits">
+        <div class="cd-unit"><div class="cd-num" id="cd-d">06</div><div class="cd-label">Days</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-h">14</div><div class="cd-label">Hrs</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-m">22</div><div class="cd-label">Min</div></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-unit"><div class="cd-num" id="cd-s">08</div><div class="cd-label">Sec</div></div>
+      </div>
+      <div class="week-pts-row">
+        <div class="pick-chip leo">Leo picks 1st · Wk ${WEEK}</div>
+        <div class="pick-chip neutral">20 pts on the line</div>
+      </div>
+    </div>
+    <div class="section-label">Previous Week Results</div>
+    ${renderPrevResults()}
+  `;
+}
+function renderLive() {
+  const p = WEEK4_PICKS;
+  const liveBoard = [
+    {rank:'1',name:'Paul McBeth',thru:'14',score:'-18',picked:'leo'},
+    {rank:'2',name:'Simon Lizotte',thru:'F',score:'-17',picked:''},
+    {rank:'3',name:'James Conrad',thru:'F',score:'-16',picked:''},
+    {rank:'T4',name:'Eagle McMahon',thru:'F',score:'-15',picked:'leo'},
+    {rank:'T4',name:'Ricky Wysocki',thru:'12',score:'-15',picked:'joe'},
+    {rank:'6',name:'Anthony Barela',thru:'F',score:'-14',picked:''},
+    {rank:'7',name:'Drew Gibson',thru:'F',score:'-13',picked:''},
+    {rank:'8',name:'Niklas Anttila',thru:'F',score:'-12',picked:''},
+    {rank:'T9',name:'Calvin Heimburg',thru:'F',score:'-11',picked:'leo'},
+    {rank:'T9',name:'Brodie Smith',thru:'F',score:'-11',picked:''},
+    {rank:'T11',name:'Kevin Jones',thru:'F',score:'-10',picked:''},
+    {rank:'T11',name:'Adam Hammes',thru:'F',score:'-10',picked:'joe'},
+    {rank:'13',name:'Matt Orum',thru:'F',score:'-9',picked:''},
+    {rank:'14',name:'Chris Clemons',thru:'F',score:'-8',picked:''},
+    {rank:'T22',name:'Chris Dickerson',thru:'F',score:'-5',picked:'joe'},
+  ];
+  return `
+    <div class="live-event-card">
+      <div class="live-card-top">
+        <div class="live-top-row">
+          <div class="live-event-name">${NEXT_EVENT.name}</div>
+          <div class="live-badge"><div class="live-dot"></div>Live</div>
+        </div>
+        <div class="live-event-sub">${NEXT_EVENT.date} · ${NEXT_EVENT.location} · Round 2 of 3</div>
+      </div>
+      <div class="live-round-row">
+        <div class="round-chip done">R1 Final</div>
+        <div class="round-chip active">R2 · Hole 14</div>
+        <div class="round-chip">R3 Tomorrow</div>
+      </div>
+    </div>
+    <div class="pick-summary-grid">
+      <div class="pick-summary-card leo">
+        <div class="psc-title leo">Leo's Picks</div>
+        <div class="psc-player"><span>${p.leo[0].split(' ').slice(-1)[0]}</span><span class="pos-tag lead">T1</span></div>
+        <div class="psc-player"><span>${p.leo[1].split(' ').slice(-1)[0]}</span><span class="pos-tag good">T4</span></div>
+        <div class="psc-player"><span style="font-size:11px;color:var(--muted)">${p.leo_forced.split(' ').slice(-1)[0]}*</span><span class="pos-tag mid">T9</span></div>
+      </div>
+      <div class="pick-summary-card joe">
+        <div class="psc-title joe">Joe's Picks</div>
+        <div class="psc-player"><span>${p.joe[0].split(' ').slice(-1)[0]}</span><span class="pos-tag good">T4</span></div>
+        <div class="psc-player"><span>${p.joe[1].split(' ').slice(-1)[0]}</span><span class="pos-tag mid">T11</span></div>
+        <div class="psc-player"><span style="font-size:11px;color:var(--muted)">${p.joe_forced.split(' ').slice(-1)[0]}*</span><span class="pos-tag out">T22</span></div>
+      </div>
+    </div>
+    <div class="section-label">Live Leaderboard — R2 In Progress</div>
+    <div class="legend"><div class="legend-item"><div class="leg-bar leo"></div>Leo's pick</div><div class="legend-item"><div class="leg-bar joe"></div>Joe's pick</div></div>
+    <div class="leaderboard">
+      <div class="lb-header"><span>Player</span><span>Thru</span><span>Total</span></div>
+      ${liveBoard.map(r=>`
+        <div class="lb-row ${r.picked ? r.picked+'-pick' : ''}">
+          <div class="lb-rank ${parseInt(r.rank)<=3?'top':''}">${r.rank}</div>
+          <div class="lb-dot ${r.picked||'none'}"></div>
+          <div class="lb-name">${r.name}${r.picked===currentUser||r.name===p[currentUser==='leo'?'leo_forced':'joe_forced']?' <span style="font-size:10px;color:var(--muted)">*</span>':''}</div>
+          <div class="lb-thru">${r.thru}</div>
+          <div class="lb-score under">${r.score}</div>
+        </div>`).join('')}
+    </div>
+    <div class="section-label">Previous Week</div>
+    ${renderPrevResults()}
+  `;
+}
+function renderPrevResults() {
+  const r = PREV_RESULTS;
+  const allPicks = [WEEK4_PICKS.leo[0],WEEK4_PICKS.leo[1],WEEK4_PICKS.leo_forced,
+                    WEEK4_PICKS.joe[0],WEEK4_PICKS.joe[1],WEEK4_PICKS.joe_forced];
+  return `
+    <div class="legend"><div class="legend-item"><div class="leg-bar leo"></div>Leo's pick</div><div class="legend-item"><div class="leg-bar joe"></div>Joe's pick</div></div>
+    <div class="prev-event-hdr">
+      <div class="prev-event-hdr-name">${r.event}</div>
+      <div class="prev-event-hdr-date">${r.date} · ${r.location}</div>
+    </div>
+    <div class="winner-banner">
+      <span>🏆</span>
+      <span>Winner: <span class="winner-name">${r.winner}</span></span>
+      <div class="winner-tag ${r.winner_team}">${r.winner_team.toUpperCase()} +20pts</div>
+    </div>
+    <div class="prev-lb leaderboard">
+      <div class="lb-header"><span>Player</span><span></span><span>Score</span></div>
+      ${r.leaderboard.map(row=>`
+        <div class="lb-row ${pickClass(row.name)}">
+          <div class="lb-rank ${row.rank<=3?'top':''}">${row.rank}</div>
+          <div class="lb-dot ${dotClass(row.name)}"></div>
+          <div class="lb-name">${row.name}</div>
+          <div class="lb-thru"></div>
+          <div class="lb-score under">${row.score}</div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+function startCountdown() {
+  if(countdownTimer) clearInterval(countdownTimer);
+  function tick() {
+    const now = new Date();
+    const diff = Math.max(0, NEXT_EVENT.start - now);
+    const d = document.getElementById('cd-d');
+    const h = document.getElementById('cd-h');
+    const m = document.getElementById('cd-m');
+    const s = document.getElementById('cd-s');
+    if(!d) { clearInterval(countdownTimer); return; }
+    const days = Math.floor(diff/86400000);
+    const hrs = Math.floor((diff%86400000)/3600000);
+    const min = Math.floor((diff%3600000)/60000);
+    const sec = Math.floor((diff%60000)/1000);
+    d.textContent = String(days).padStart(2,'0');
+    h.textContent = String(hrs).padStart(2,'0');
+    m.textContent = String(min).padStart(2,'0');
+    s.textContent = String(sec).padStart(2,'0');
+  }
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+
+// ══ DRAFT ══
+function isDraftOpen() {
+  // Mon–Wed of tournament week (Apr 7–9 for Music City)
+  const now = new Date();
+  const open = new Date('2026-04-07T00:00:00-05:00');
+  const close = new Date('2026-04-09T23:59:59-05:00');
+  return now >= open && now <= close;
+}
+function hasSubmitted(user) {
+  return submissions[user] && submissions[user].draft8 && submissions[user].draft8.length === 8;
+}
+function renderDraft() {
+  const el = document.getElementById('draft-content');
+  const open = isDraftOpen();
+  const submitted = hasSubmitted(currentUser);
+  const otherSubmitted = hasSubmitted(currentUser==='leo'?'joe':'leo');
+  const p = WEEK4_PICKS;
+  el.innerHTML = `
+    <div class="draft-event-card">
+      <div class="dec-name">Music City Open</div>
+      <div class="dec-date">Apr 10–13, 2026 · Nashville, TN</div>
+      <div class="dec-order">
+        <div class="dec-order-label">Week ${WEEK} order:</div>
+        <div class="pick-chip leo">Leo 1st</div>
+        <div class="pick-chip joe">Joe 2nd</div>
+        <div class="pick-chip joe">Joe 3rd</div>
+        <div class="pick-chip leo">Leo 4th</div>
+        <div class="pick-chip neutral">+ Forced</div>
+      </div>
+    </div>
+    ${open && !submitted ? `
+      <div class="draft-cta">
+        <div class="draft-cta-title">Draft Window Open</div>
+        <div class="draft-cta-sub">Submit your ranked 8 players and your 6 forced picks for the opponent. Closes Wed midnight.</div>
+        <button class="btn" onclick="startSubmit()">Submit My Picks →</button>
+      </div>` : ''}
+    ${submitted ? `
+      <div class="draft-cta" style="background:var(--green-dim);border-color:var(--green-border);">
+        <div class="draft-cta-title" style="color:var(--green);">✓ Picks Submitted</div>
+        <div class="draft-cta-sub">Your ranked picks are locked in for Week ${WEEK}. ${otherSubmitted ? 'Joe has also submitted.' : 'Waiting on Joe...'}</div>
+        <button class="btn secondary" onclick="startSubmit()">Edit Picks</button>
+      </div>` : ''}
+    ${!open && !submitted ? `
+      <div class="draft-closed">
+        <div class="draft-closed-label">Draft Window Closed</div>
+        <div class="draft-closed-sub">Submissions open Monday of tournament week and close Wednesday at midnight.</div>
+      </div>` : ''}
+    <div class="section-label">Week ${WEEK} Rosters</div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:10px;">Placeholder rosters — will resolve from submissions once both players submit.</div>
+    <div class="roster-grid">
+      <div class="roster-card">
+        <div class="rc-title leo">Leo</div>
+        <div class="rc-player"><span class="rc-num">P1</span>${p.leo[0]}</div>
+        <div class="rc-player"><span class="rc-num">P4</span>${p.leo[1]}</div>
+        <div class="rc-player"><span class="rc-num" style="font-style:italic">F</span><span class="rc-forced">${p.leo_forced}*</span></div>
+      </div>
+      <div class="roster-card">
+        <div class="rc-title joe">Joe</div>
+        <div class="rc-player"><span class="rc-num">P2</span>${p.joe[0]}</div>
+        <div class="rc-player"><span class="rc-num">P3</span>${p.joe[1]}</div>
+        <div class="rc-player"><span class="rc-num" style="font-style:italic">F</span><span class="rc-forced">${p.joe_forced}*</span></div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">* Forced picks assigned by opponent</div>
+  `;
+}
+
+// ══ DRAFT SUBMISSION ══
+function startSubmit() {
+  draft8 = [];
+  forced6 = [];
+  submitStep = 1;
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-submit').classList.add('active');
+  renderSubmitStep();
+}
+function renderSubmitStep() {
+  const isLeo = currentUser === 'leo';
+  const colorClass = isLeo ? 'leo-r' : '';
+  const colorVar = isLeo ? 'var(--green)' : 'var(--orange)';
+  const eligible = MPO_PLAYERS.filter(p=>!BANNED.includes(p.name));
+  const top10eligible = eligible.slice(0,10);
+  const el = document.getElementById('submit-content');
+  if(submitStep === 1) {
+    const progress = (draft8.length/8)*100;
+    const remaining = eligible.filter(p=>!draft8.find(d=>d.name===p.name));
+    el.innerHTML = `
+      <div class="ds-header">
+        <div class="ds-back" onclick="cancelSubmit()">← Back</div>
+        <div class="ds-title" style="color:${colorVar}">${currentUser==='leo'?'Leo':'Joe'}'s Picks</div>
+      </div>
+      <div class="ds-section">
+        <div class="ds-section-title">Rank Your Top 8 Players</div>
+        <div class="ds-section-sub">Tap players in order of preference. Your top available player gets drafted to your team in snake order.</div>
+        <div class="progress-bar-wrap"><div class="progress-bar ${isLeo?'leo-p':''}" style="width:${progress}%"></div></div>
+        ${draft8.length>0?`
+          <div class="ranked-list" style="margin-bottom:12px;">
+            ${draft8.map((p,i)=>`
+              <div class="ranked-item">
+                <div class="ri-rank ${colorClass}">${i+1}</div>
+                <div class="ri-name">${p.name}</div>
+                <div class="ri-remove" onclick="removeDraft8(${i})">✕</div>
+              </div>`).join('')}
+          </div>`:'' }
+        ${draft8.length<8?`
+          <div class="section-label" style="margin-bottom:8px;">Available Players</div>
+          <div class="player-pool">
+            ${remaining.map(p=>`
+              <div class="pool-player" onclick="addDraft8('${p.name}')">
+                <div class="pp-rank ${colorClass}">${draft8.length+1}</div>
+                <div class="pp-name">${p.name}</div>
+                <div class="pp-pts">${p.pts}</div>
+              </div>`).join('')}
+          </div>`:
+          `<div style="text-align:center;padding:20px;color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">✓ All 8 ranked!</div>`
+        }
+      </div>
+      <div class="submit-footer">
+        <button class="btn secondary" onclick="cancelSubmit()">Cancel</button>
+        <button class="btn ${isLeo?'green':''}" onclick="nextStep()" ${draft8.length<8?'disabled style="opacity:0.4;cursor:not-allowed"':''}>Next: Forced Picks →</button>
+      </div>
+    `;
+  } else if(submitStep === 2) {
+    const progress = (forced6.length/6)*100;
+    const remaining = top10eligible.filter(p=>!forced6.find(d=>d.name===p.name));
+    el.innerHTML = `
+      <div class="ds-header">
+        <div class="ds-back" onclick="submitStep=1;renderSubmitStep()">← Back</div>
+        <div class="ds-title" style="color:${colorVar}">Forced Picks</div>
+      </div>
+      <div class="ds-section">
+        <div class="ds-section-title">Rank 6 Players for Your Opponent</div>
+        <div class="ds-section-sub">These are top-10 DGPT players you're assigning to ${currentUser==='leo'?'Joe':'Leo'}. Their highest-ranked available player gets forced onto their roster.</div>
+        <div class="progress-bar-wrap"><div class="progress-bar ${isLeo?'leo-p':''}" style="width:${progress}%"></div></div>
+        ${forced6.length>0?`
+          <div class="ranked-list" style="margin-bottom:12px;">
+            ${forced6.map((p,i)=>`
+              <div class="ranked-item">
+                <div class="ri-rank ${colorClass}">${i+1}</div>
+                <div class="ri-name">${p.name}</div>
+                <div class="ri-remove" onclick="removeForced6(${i})">✕</div>
+              </div>`).join('')}
+          </div>`:'' }
+        ${forced6.length<6?`
+          <div class="section-label" style="margin-bottom:8px;">Top 10 DGPT Players</div>
+          <div class="player-pool">
+            ${remaining.map(p=>`
+              <div class="pool-player" onclick="addForced6('${p.name}')">
+                <div class="pp-rank ${colorClass}">${forced6.length+1}</div>
+                <div class="pp-name">${p.name}</div>
+                <div class="pp-pts top10-tag">Top 10</div>
+              </div>`).join('')}
+          </div>`:
+          `<div style="text-align:center;padding:20px;color:var(--green);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;">✓ All 6 ranked!</div>`
+        }
+      </div>
+      <div class="submit-footer">
+        <button class="btn secondary" onclick="submitStep=1;renderSubmitStep()">← Back</button>
+        <button class="btn ${isLeo?'green':''}" onclick="nextStep()" ${forced6.length<6?'disabled style="opacity:0.4;cursor:not-allowed"':''}>Review Picks →</button>
+      </div>
+    `;
+  } else if(submitStep === 3) {
+    el.innerHTML = `
+      <div class="ds-header">
+        <div class="ds-back" onclick="submitStep=2;renderSubmitStep()">← Back</div>
+        <div class="ds-title" style="color:${colorVar}">Confirm Picks</div>
+      </div>
+      <div class="ds-section">
+        <div class="ds-section-title">Your Draft Ranking</div>
+        <div class="ranked-list" style="margin-bottom:18px;">
+          ${draft8.map((p,i)=>`
+            <div class="ranked-item">
+              <div class="ri-rank ${colorClass}">${i+1}</div>
+              <div class="ri-name">${p.name}</div>
+            </div>`).join('')}
+        </div>
+        <div class="ds-section-title">Forced Picks for ${currentUser==='leo'?'Joe':'Leo'}</div>
+        <div class="ranked-list" style="margin-bottom:18px;">
+          ${forced6.map((p,i)=>`
+            <div class="ranked-item">
+              <div class="ri-rank" style="color:${currentUser==='leo'?'var(--joe)':'var(--leo)'}">${i+1}</div>
+              <div class="ri-name">${p.name}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <div class="submit-footer">
+        <button class="btn secondary" onclick="submitStep=2;renderSubmitStep()">← Edit</button>
+        <button class="btn ${isLeo?'green':''}" onclick="confirmSubmit()">Lock In Picks ✓</button>
+      </div>
+    `;
+  }
+  document.getElementById('main-scroll').scrollTop = 0;
+}
+function addDraft8(name) {
+  const p = MPO_PLAYERS.find(x=>x.name===name);
+  if(p && draft8.length<8 && !draft8.find(x=>x.name===name)) {
+    draft8.push(p);
+    renderSubmitStep();
+  }
+}
+function removeDraft8(i) { draft8.splice(i,1); renderSubmitStep(); }
+function addForced6(name) {
+  const p = MPO_PLAYERS.find(x=>x.name===name);
+  if(p && forced6.length<6 && !forced6.find(x=>x.name===name)) {
+    forced6.push(p);
+    renderSubmitStep();
+  }
+}
+function removeForced6(i) { forced6.splice(i,1); renderSubmitStep(); }
+function nextStep() { submitStep++; renderSubmitStep(); }
+function cancelSubmit() {
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-draft').classList.add('active');
+  renderDraft();
+}
+function confirmSubmit() {
+  submissions[currentUser] = { draft8: [...draft8], forced6: [...forced6] };
+  document.getElementById('submit-content').innerHTML = `
+    <div class="success-wrap">
+      <div class="success-icon">🎯</div>
+      <div class="success-title" style="color:${currentUser==='leo'?'var(--leo)':'var(--joe)'}">${currentUser==='leo'?'Leo':'Joe'}'s Picks Locked!</div>
+      <div class="success-sub">Your rankings are saved for Week ${WEEK}.<br>${currentUser==='leo'?'Joe':'Leo'} still needs to submit theirs.</div>
+      <button class="btn" onclick="cancelSubmit()" style="max-width:200px;">Back to Draft</button>
+    </div>
+  `;
+}
+
+// ══ STANDINGS ══
+function renderStandings() {
+  const el = document.getElementById('standings-list');
+  const standingsPlayers = [
+    ...MPO_PLAYERS.filter(p=>p.name==='Gannon Buhr'),
+    ...MPO_PLAYERS.filter(p=>!BANNED.includes(p.name))
+  ];
+  el.innerHTML = standingsPlayers.map((p,i)=>{
+    const isBanned = BANNED.includes(p.name);
+    const rank = isBanned ? 1 : (i);
+    const isTop = rank <= 3;
+    const isTop10 = rank <= 10 && !isBanned;
+    const leoP = isPickedBy(p.name,'leo');
+    const joeP = isPickedBy(p.name,'joe');
+    return `<div class="st-row">
+      <div class="st-rank ${isTop&&!isBanned?'top':''}">${isBanned?'—':rank}</div>
+      <div class="st-avatar" style="background:${p.col}22;color:${p.col}">${p.initials}</div>
+      <div class="st-info">
+        <div class="st-name">
+          ${p.name}
+          ${isBanned?'<span class="banned-tag">BANNED</span>':''}
+          ${isTop10&&!isBanned?'<span class="top10-tag">Top 10</span>':''}
+          ${leoP?'<span style="background:var(--green-dim);color:var(--leo);font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;font-family:Barlow Condensed,sans-serif;">Leo</span>':''}
+          ${joeP?'<span style="background:var(--orange-dim);color:var(--joe);font-size:10px;font-weight:700;padding:2px 6px;border-radius:6px;font-family:Barlow Condensed,sans-serif;">Joe</span>':''}
+        </div>
+        <div class="st-sub">${isBanned?'Banned — too dominant':'DGPT '+(isTop10?'Top 10':rank > 10 ? 'Ranked #'+rank : '')}</div>
+      </div>
+      <div class="st-pts" style="color:${isBanned?'var(--muted)':'var(--text)'}">${p.pts}</div>
+    </div>`;
+  }).join('');
+}
+
+// ══ INIT ══
+const savedUser = localStorage.getItem('dgpt_user');
+if(savedUser && PINS[savedUser]) {
+  currentUser = savedUser;
+  showApp();
+} else {
+  document.getElementById('login-screen').style.display = 'flex';
+}
+</script>
+</body>
+</html>
