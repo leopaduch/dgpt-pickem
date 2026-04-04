@@ -16,11 +16,12 @@
     {
       "week": 1,
       "event": "Supreme Flight Open",
+      "location": "Brooksville, FL",
       "points_available": 20,
       "first_pick": "joe",
       "status": "done",
       "result": "push",
-      "winner": null,
+      "winner": "Richard Wysocki",
       "winning_team": null,
       "points_awarded": 0,
       "rolled_to": 2,
@@ -30,6 +31,7 @@
     {
       "week": 2,
       "event": "Big Easy Open",
+      "location": "New Orleans, LA",
       "points_available": 40,
       "first_pick": "leo",
       "status": "done",
@@ -44,6 +46,7 @@
     {
       "week": 3,
       "event": "Queen City Classic",
+      "location": "Charlotte, NC",
       "points_available": 20,
       "first_pick": "joe",
       "status": "done",
@@ -58,6 +61,7 @@
     {
       "week": 4,
       "event": "PDGA Champions Cup",
+      "location": "Lynchburg, VA",
       "points_available": 20,
       "first_pick": "joe",
       "status": "upcoming",
