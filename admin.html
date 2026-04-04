@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DGPT Pick'em — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E8541A;--navy:#0a0d1a;--navy2:#111425;--navy3:#181d32;--card:#1e2338;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.15);--text:#eeecea;--muted:#7a7f9a;--green:#34d068;--green-dim:rgba(52,208,104,0.12);--red:#f04545;--red-dim:rgba(240,69,69,0.12);--gold:#f0c040;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);max-width:600px;margin:0 auto;padding:20px 16px 60px;}
+.header{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.logo span{color:var(--orange);}
+.admin-badge{background:var(--red-dim);color:var(--red);border:1px solid rgba(240,69,69,0.3);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px;}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;color:var(--orange);}
+.field-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.field-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+input,select{background:var(--navy3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--text);width:100%;outline:none;}
+input:focus,select:focus{border-color:var(--orange);}
+select option{background:var(--navy3);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn{background:var(--orange);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;width:100%;transition:all 0.15s;margin-top:4px;}
+.btn:active{transform:scale(0.98);}
+.btn.green{background:var(--green);color:#0a1a0f;}
+.btn.secondary{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.score-display{display:flex;gap:12px;margin-bottom:14px;}
+.score-card{flex:1;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.score-card-name{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.score-card-num{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;line-height:1;}
+.score-card-num.leo{color:var(--green);}
+.score-card-num.joe{color:var(--orange);}
+.week-row{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.week-row-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;}
+.week-row-result{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.week-row-result.leo{background:var(--green-dim);color:var(--green);}
+.week-row-result.joe{background:rgba(232,84,26,0.15);color:var(--orange);}
+.week-row-result.push{background:rgba(255,255,255,0.06);color:var(--muted);}
+.week-row-result.upcoming{background:rgba(240,192,64,0.12);color:var(--gold);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#0a1a0f;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:10px 24px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+.info-pill{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.login-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px;}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.pin-row{display:flex;gap:10px;}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);transition:all 0.15s;}
+.pin-dot.filled{background:var(--orange);border-color:var(--orange);}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:220px;}
+.key{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-align:center;cursor:pointer;user-select:none;}
+.key:active{background:var(--navy3);transform:scale(0.95);}
+.key.empty{background:transparent;border-color:transparent;cursor:default;}
+.key.del{font-size:16px;color:var(--muted);}
+.error-msg{font-size:13px;color:var(--red);min-height:18px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-wrap" class="login-wrap">
+  <div class="login-title">DGPT <span style="color:var(--orange)">Admin</span></div>
+  <div style="font-size:13px;color:var(--muted);">Enter admin PIN to continue</div>
+  <div class="pin-row" id="pin-display">
+    <div class="pin-dot" id="ap0"></div>
+    <div class="pin-dot" id="ap1"></div>
+    <div class="pin-dot" id="ap2"></div>
+    <div class="pin-dot" id="ap3"></div>
+  </div>
+  <div class="keypad">
+    <div class="key" onclick="pk('1')">1</div><div class="key" onclick="pk('2')">2</div><div class="key" onclick="pk('3')">3</div>
+    <div class="key" onclick="pk('4')">4</div><div class="key" onclick="pk('5')">5</div><div class="key" onclick="pk('6')">6</div>
+    <div class="key" onclick="pk('7')">7</div><div class="key" onclick="pk('8')">8</div><div class="key" onclick="pk('9')">9</div>
+    <div class="key empty"></div><div class="key" onclick="pk('0')">0</div><div class="key del" onclick="pd()">⌫</div>
+  </div>
+  <div class="error-msg" id="pin-error"></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" style="display:none;">
+
+  <div class="header">
+    <div class="logo">DGPT <span>Admin</span></div>
+    <div class="admin-badge">Admin Mode</div>
+  </div>
+
+  <!-- SEASON SCORES -->
+  <div class="section">
+    <div class="section-title">Season Scores</div>
+    <div class="score-display">
+      <div class="score-card">
+        <div class="score-card-name">Joe</div>
+        <div class="score-card-num joe" id="disp-joe">—</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card-name">Leo</div>
+        <div class="score-card-num leo" id="disp-leo">—</div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field-row">
+        <div class="field-label">Joe's Score</div>
+        <input type="number" id="score-joe" placeholder="40">
+      </div>
+      <div class="field-row">
+        <div class="field-label">Leo's Score</div>
+        <input type="number" id="score-leo" placeholder="20">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Rollover Points (banked from push weeks)</div>
+      <input type="number" id="score-rollover" placeholder="0">
+    </div>
+    <button class="btn" onclick="saveScores()">Save Scores</button>
+  </div>
+
+  <!-- RECORD WEEK RESULT -->
+  <div class="section">
+    <div class="section-title">Record Week Result</div>
+    <div class="info-pill">Use this after each tournament to record the winner and award points. This updates picks.json automatically.</div>
+    <div class="field-row">
+      <div class="field-label">Week</div>
+      <select id="result-week"></select>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Tournament Winner (MPO)</div>
+      <input type="text" id="result-winner" placeholder="e.g. Richard Wysocki">
+    </div>
+    <div class="field-row">
+      <div class="field-label">Winner's Team</div>
+      <select id="result-team">
+        <option value="">-- Push (no one picked the winner) --</option>
+        <option value="leo">Leo</option>
+        <option value="joe">Joe</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Points Awarded</div>
+      <input type="number" id="result-pts" placeholder="20">
+    </div>
+    <button class="btn green" onclick="saveResult()">Record Result & Award Points</button>
+  </div>
+
+  <!-- WEEK HISTORY -->
+  <div class="section">
+    <div class="section-title">Week History</div>
+    <div id="week-history"></div>
+  </div>
+
+  <!-- LIVE TOGGLE -->
+  <div class="section">
+    <div class="section-title">Live Tournament</div>
+    <div class="info-pill">Toggle this on when a tournament is actively being played. The Results tab will switch from countdown to live leaderboard mode.</div>
+    <div class="field-row">
+      <div class="field-label">Tournament Status</div>
+      <select id="live-toggle">
+        <option value="false">Off — Show countdown</option>
+        <option value="true">On — Show live leaderboard</option>
+      </select>
+    </div>
+    <div class="field-row" id="live-event-wrap">
+      <div class="field-label">Active Event Name</div>
+      <input type="text" id="live-event-name" placeholder="PDGA Champions Cup">
+    </div>
+    <div class="field-row">
+      <div class="field-label">Current Round</div>
+      <select id="live-round">
+        <option value="1">Round 1</option>
+        <option value="2">Round 2</option>
+        <option value="3">Round 3</option>
+        <option value="4">Round 4 (Final)</option>
+      </select>
+    </div>
+    <button class="btn" onclick="saveLive()">Update Live Status</button>
+  </div>
+
+  <!-- BANNED PLAYERS -->
+  <div class="section">
+    <div class="section-title">Banned Players</div>
+    <div id="banned-list" style="margin-bottom:12px;"></div>
+    <div class="row2">
+      <input type="text" id="ban-input" placeholder="Player name to ban">
+      <button class="btn" onclick="addBan()">Ban Player</button>
+    </div>
+  </div>
+
+  <!-- DOWNLOAD / INSTRUCTIONS -->
+  <div class="section">
+    <div class="section-title">Update GitHub</div>
+    <div class="info-pill">After making changes above, download the updated files and replace them in your GitHub repo. Vercel will auto-deploy within ~30 seconds.</div>
+    <button class="btn secondary" onclick="downloadPicks()" style="margin-bottom:8px;">Download picks.json</button>
+    <button class="btn secondary" onclick="downloadResults()">Download results.json</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PIN = '1984';
+let pinBuf = '';
+let data = { picks: null, results: null, schedule: null };
+
+// ── LOGIN ──
+function pk(k) {
+  if(pinBuf.length>=4) return;
+  pinBuf+=k;
+  updatePinDots();
+  if(pinBuf.length===4) setTimeout(checkPin,120);
+}
+function pd() { pinBuf=pinBuf.slice(0,-1); updatePinDots(); }
+function updatePinDots() {
+  for(let i=0;i<4;i++) document.getElementById('ap'+i).classList.toggle('filled',i<pinBuf.length);
+}
+function checkPin() {
+  if(pinBuf===ADMIN_PIN) {
+    document.getElementById('login-wrap').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    loadData();
+  } else {
+    document.getElementById('pin-error').textContent='Incorrect PIN';
+    pinBuf=''; updatePinDots();
+    setTimeout(()=>document.getElementById('pin-error').textContent='',1500);
+  }
+}
+
+// ── DATA ──
+async function loadData() {
+  const files = ['picks','results','schedule'];
+  await Promise.all(files.map(async f => {
+    try {
+      const r = await fetch(`data/${f}.json?t=${Date.now()}`);
+      if(r.ok) data[f] = await r.json();
+    } catch(e) { console.warn('Could not load',f); }
+  }));
+  renderAll();
+}
+
+function renderAll() {
+  // Scores
+  const s = data.picks?.season_score;
+  if(s) {
+    document.getElementById('disp-joe').textContent = s.joe;
+    document.getElementById('disp-leo').textContent = s.leo;
+    document.getElementById('score-joe').value = s.joe;
+    document.getElementById('score-leo').value = s.leo;
+    document.getElementById('score-rollover').value = s.rollover||0;
+  }
+
+  // Week selector
+  const weeks = data.picks?.weeks || [];
+  const sel = document.getElementById('result-week');
+  sel.innerHTML = weeks.map(w=>`<option value="${w.week}">Week ${w.week} — ${w.event}</option>`).join('');
+  sel.addEventListener('change', updateResultForm);
+  updateResultForm();
+
+  // Week history
+  const hist = document.getElementById('week-history');
+  hist.innerHTML = weeks.map(w=>`
+    <div class="week-row">
+      <div class="week-row-name">Wk ${w.week} · ${w.event}</div>
+      <div class="week-row-result ${w.result||'upcoming'}">${
+        w.result==='push'?'PUSH':
+        w.result==='leo'?`LEO +${w.points_awarded}`:
+        w.result==='joe'?`JOE +${w.points_awarded}`:
+        'Upcoming'
+      }</div>
+    </div>`).join('');
+
+  // Live toggle
+  const live = data.results?.live;
+  if(live) {
+    document.getElementById('live-toggle').value = String(live.active||false);
+    document.getElementById('live-event-name').value = live.event_name||'';
+    document.getElementById('live-round').value = live.current_round||1;
+  }
+
+  // Banned
+  const banned = data.picks?.game_config?.banned_players||[];
+  document.getElementById('banned-list').innerHTML = banned.map(p=>`
+    <div class="week-row" style="margin-bottom:6px;">
+      <div class="week-row-name">${p}</div>
+      <button onclick="removeBan('${p}')" style="background:var(--red-dim);color:var(--red);border:1px solid rgba(240,69,69,0.3);border-radius:6px;padding:4px 10px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">Remove</button>
+    </div>`).join('') || '<div style="font-size:13px;color:var(--muted);padding:4px 0;">No banned players</div>';
+}
+
+function updateResultForm() {
+  const weekNum = parseInt(document.getElementById('result-week').value);
+  const week = data.picks?.weeks?.find(w=>w.week===weekNum);
+  if(week) {
+    document.getElementById('result-winner').value = week.winner||'';
+    document.getElementById('result-team').value = week.winning_team||'';
+    document.getElementById('result-pts').value = week.points_awarded||week.points_available||20;
+  }
+}
+
+// ── SAVE SCORES ──
+function saveScores() {
+  if(!data.picks) return;
+  data.picks.season_score.joe = parseInt(document.getElementById('score-joe').value)||0;
+  data.picks.season_score.leo = parseInt(document.getElementById('score-leo').value)||0;
+  data.picks.season_score.rollover = parseInt(document.getElementById('score-rollover').value)||0;
+  data.picks.updated_at = new Date().toISOString();
+  document.getElementById('disp-joe').textContent = data.picks.season_score.joe;
+  document.getElementById('disp-leo').textContent = data.picks.season_score.leo;
+  showToast('Scores updated — download picks.json to save');
+}
+
+// ── SAVE RESULT ──
+function saveResult() {
+  if(!data.picks) return;
+  const weekNum = parseInt(document.getElementById('result-week').value);
+  const week = data.picks.weeks.find(w=>w.week===weekNum);
+  if(!week) return;
+  const winner = document.getElementById('result-winner').value.trim();
+  const team = document.getElementById('result-team').value;
+  const pts = parseInt(document.getElementById('result-pts').value)||20;
+  week.winner = winner||null;
+  week.winning_team = team||null;
+  week.result = team||'push';
+  week.points_awarded = team?pts:0;
+  week.status = 'done';
+  if(!team && week.week < data.picks.weeks.length) {
+    const next = data.picks.weeks.find(w=>w.week===weekNum+1);
+    if(next) { week.rolled_to=weekNum+1; next.points_available=(next.points_available||20)+pts; }
+  }
+  // Update season score
+  if(team) {
+    data.picks.season_score[team] = (data.picks.season_score[team]||0)+pts;
+  }
+  data.picks.updated_at = new Date().toISOString();
+  renderAll();
+  showToast(`Week ${weekNum} recorded — download picks.json`);
+}
+
+// ── LIVE TOGGLE ──
+function saveLive() {
+  if(!data.results) return;
+  const active = document.getElementById('live-toggle').value==='true';
+  data.results.live.active = active;
+  data.results.live.event_name = document.getElementById('live-event-name').value;
+  data.results.live.current_round = parseInt(document.getElementById('live-round').value)||1;
+  data.results.updated_at = new Date().toISOString();
+  showToast('Live status updated — download results.json');
+}
+
+// ── BANNED ──
+function addBan() {
+  const name = document.getElementById('ban-input').value.trim();
+  if(!name||!data.picks) return;
+  if(!data.picks.game_config.banned_players.includes(name)) {
+    data.picks.game_config.banned_players.push(name);
+    document.getElementById('ban-input').value='';
+    renderAll();
+    showToast(`${name} banned — download picks.json`);
+  }
+}
+function removeBan(name) {
+  if(!data.picks) return;
+  data.picks.game_config.banned_players = data.picks.game_config.banned_players.filter(p=>p!==name);
+  renderAll();
+  showToast(`${name} unbanned — download picks.json`);
+}
+
+// ── DOWNLOADS ──
+function downloadPicks() {
+  if(!data.picks) return;
+  download('picks.json', JSON.stringify(data.picks, null, 2));
+}
+function downloadResults() {
+  if(!data.results) return;
+  download('results.json', JSON.stringify(data.results, null, 2));
+}
+function download(filename, text) {
+  const a = document.createElement('a');
+  a.href = 'data:application/json;charset=utf-8,'+encodeURIComponent(text);
+  a.download = filename;
+  a.click();
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DGPT Pick'em — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#E8541A;--navy:#0a0d1a;--navy2:#111425;--navy3:#181d32;--card:#1e2338;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.15);--text:#eeecea;--muted:#7a7f9a;--green:#34d068;--green-dim:rgba(52,208,104,0.12);--red:#f04545;--red-dim:rgba(240,69,69,0.12);--gold:#f0c040;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Barlow',sans-serif;background:var(--navy);color:var(--text);max-width:600px;margin:0 auto;padding:20px 16px 60px;}
+.header{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.logo span{color:var(--orange);}
+.admin-badge{background:var(--red-dim);color:var(--red);border:1px solid rgba(240,69,69,0.3);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px;}
+.section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px;}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:14px;color:var(--orange);}
+.field-row{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
+.field-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+input,select{background:var(--navy3);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;font-family:'Barlow',sans-serif;font-size:14px;color:var(--text);width:100%;outline:none;}
+input:focus,select:focus{border-color:var(--orange);}
+select option{background:var(--navy3);}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn{background:var(--orange);color:white;border:none;border-radius:8px;padding:11px 20px;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;cursor:pointer;width:100%;transition:all 0.15s;margin-top:4px;}
+.btn:active{transform:scale(0.98);}
+.btn.green{background:var(--green);color:#0a1a0f;}
+.btn.secondary{background:transparent;border:1px solid var(--border2);color:var(--text);}
+.score-display{display:flex;gap:12px;margin-bottom:14px;}
+.score-card{flex:1;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;}
+.score-card-name{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.score-card-num{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;line-height:1;}
+.score-card-num.leo{color:var(--green);}
+.score-card-num.joe{color:var(--orange);}
+.week-row{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.week-row-name{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;text-transform:uppercase;}
+.week-row-result{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.week-row-result.leo{background:var(--green-dim);color:var(--green);}
+.week-row-result.joe{background:rgba(232,84,26,0.15);color:var(--orange);}
+.week-row-result.push{background:rgba(255,255,255,0.06);color:var(--muted);}
+.week-row-result.upcoming{background:rgba(240,192,64,0.12);color:var(--gold);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--green);color:#0a1a0f;font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;padding:10px 24px;border-radius:20px;text-transform:uppercase;letter-spacing:0.5px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+.divider{height:1px;background:var(--border);margin:14px 0;}
+.info-pill{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.login-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px;}
+.login-title{font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;text-transform:uppercase;letter-spacing:1px;}
+.pin-row{display:flex;gap:10px;}
+.pin-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--border2);transition:all 0.15s;}
+.pin-dot.filled{background:var(--orange);border-color:var(--orange);}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:220px;}
+.key{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;text-align:center;cursor:pointer;user-select:none;}
+.key:active{background:var(--navy3);transform:scale(0.95);}
+.key.empty{background:transparent;border-color:transparent;cursor:default;}
+.key.del{font-size:16px;color:var(--muted);}
+.error-msg{font-size:13px;color:var(--red);min-height:18px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-wrap" class="login-wrap">
+  <div class="login-title">DGPT <span style="color:var(--orange)">Admin</span></div>
+  <div style="font-size:13px;color:var(--muted);">Enter admin PIN to continue</div>
+  <div class="pin-row" id="pin-display">
+    <div class="pin-dot" id="ap0"></div>
+    <div class="pin-dot" id="ap1"></div>
+    <div class="pin-dot" id="ap2"></div>
+    <div class="pin-dot" id="ap3"></div>
+  </div>
+  <div class="keypad">
+    <div class="key" onclick="pk('1')">1</div><div class="key" onclick="pk('2')">2</div><div class="key" onclick="pk('3')">3</div>
+    <div class="key" onclick="pk('4')">4</div><div class="key" onclick="pk('5')">5</div><div class="key" onclick="pk('6')">6</div>
+    <div class="key" onclick="pk('7')">7</div><div class="key" onclick="pk('8')">8</div><div class="key" onclick="pk('9')">9</div>
+    <div class="key empty"></div><div class="key" onclick="pk('0')">0</div><div class="key del" onclick="pd()">⌫</div>
+  </div>
+  <div class="error-msg" id="pin-error"></div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel" style="display:none;">
+
+  <div class="header">
+    <div class="logo">DGPT <span>Admin</span></div>
+    <div class="admin-badge">Admin Mode</div>
+  </div>
+
+  <!-- SEASON SCORES -->
+  <div class="section">
+    <div class="section-title">Season Scores</div>
+    <div class="score-display">
+      <div class="score-card">
+        <div class="score-card-name">Joe</div>
+        <div class="score-card-num joe" id="disp-joe">—</div>
+      </div>
+      <div class="score-card">
+        <div class="score-card-name">Leo</div>
+        <div class="score-card-num leo" id="disp-leo">—</div>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field-row">
+        <div class="field-label">Joe's Score</div>
+        <input type="number" id="score-joe" placeholder="40">
+      </div>
+      <div class="field-row">
+        <div class="field-label">Leo's Score</div>
+        <input type="number" id="score-leo" placeholder="20">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Rollover Points (banked from push weeks)</div>
+      <input type="number" id="score-rollover" placeholder="0">
+    </div>
+    <button class="btn" onclick="saveScores()">Save Scores</button>
+  </div>
+
+  <!-- RECORD WEEK RESULT -->
+  <div class="section">
+    <div class="section-title">Record Week Result</div>
+    <div class="info-pill">Use this after each tournament to record the winner and award points. This updates picks.json automatically.</div>
+    <div class="field-row">
+      <div class="field-label">Week</div>
+      <select id="result-week"></select>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Tournament Winner (MPO)</div>
+      <input type="text" id="result-winner" placeholder="e.g. Richard Wysocki">
+    </div>
+    <div class="field-row">
+      <div class="field-label">Winner's Team</div>
+      <select id="result-team">
+        <option value="">-- Push (no one picked the winner) --</option>
+        <option value="leo">Leo</option>
+        <option value="joe">Joe</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Points Awarded</div>
+      <input type="number" id="result-pts" placeholder="20">
+    </div>
+    <button class="btn green" onclick="saveResult()">Record Result & Award Points</button>
+  </div>
+
+  <!-- WEEK HISTORY -->
+  <div class="section">
+    <div class="section-title">Week History</div>
+    <div id="week-history"></div>
+  </div>
+
+  <!-- LIVE TOGGLE -->
+  <div class="section">
+    <div class="section-title">Live Tournament</div>
+    <div class="info-pill">Toggle this on when a tournament is actively being played. The Results tab will switch from countdown to live leaderboard mode.</div>
+    <div class="field-row">
+      <div class="field-label">Tournament Status</div>
+      <select id="live-toggle">
+        <option value="false">Off — Show countdown</option>
+        <option value="true">On — Show live leaderboard</option>
+      </select>
+    </div>
+    <div class="field-row" id="live-event-wrap">
+      <div class="field-label">Active Event Name</div>
+      <input type="text" id="live-event-name" placeholder="PDGA Champions Cup">
+    </div>
+    <div class="field-row">
+      <div class="field-label">Current Round</div>
+      <select id="live-round">
+        <option value="1">Round 1</option>
+        <option value="2">Round 2</option>
+        <option value="3">Round 3</option>
+        <option value="4">Round 4 (Final)</option>
+      </select>
+    </div>
+    <button class="btn" onclick="saveLive()">Update Live Status</button>
+  </div>
+
+  <!-- BANNED PLAYERS -->
+  <div class="section">
+    <div class="section-title">Banned Players</div>
+    <div id="banned-list" style="margin-bottom:12px;"></div>
+    <div class="row2">
+      <input type="text" id="ban-input" placeholder="Player name to ban">
+      <button class="btn" onclick="addBan()">Ban Player</button>
+    </div>
+  </div>
+
+  <!-- DOWNLOAD / INSTRUCTIONS -->
+  <div class="section">
+    <div class="section-title">Update GitHub</div>
+    <div class="info-pill">After making changes above, download the updated files and replace them in your GitHub repo. Vercel will auto-deploy within ~30 seconds.</div>
+    <button class="btn secondary" onclick="downloadPicks()" style="margin-bottom:8px;">Download picks.json</button>
+    <button class="btn secondary" onclick="downloadResults()">Download results.json</button>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PIN = '1984';
+let pinBuf = '';
+let data = { picks: null, results: null, schedule: null };
+
+// ── LOGIN ──
+function pk(k) {
+  if(pinBuf.length>=4) return;
+  pinBuf+=k;
+  updatePinDots();
+  if(pinBuf.length===4) setTimeout(checkPin,120);
+}
+function pd() { pinBuf=pinBuf.slice(0,-1); updatePinDots(); }
+function updatePinDots() {
+  for(let i=0;i<4;i++) document.getElementById('ap'+i).classList.toggle('filled',i<pinBuf.length);
+}
+function checkPin() {
+  if(pinBuf===ADMIN_PIN) {
+    document.getElementById('login-wrap').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    loadData();
+  } else {
+    document.getElementById('pin-error').textContent='Incorrect PIN';
+    pinBuf=''; updatePinDots();
+    setTimeout(()=>document.getElementById('pin-error').textContent='',1500);
+  }
+}
+
+// ── DATA ──
+async function loadData() {
+  const files = ['picks','results','schedule'];
+  await Promise.all(files.map(async f => {
+    try {
+      const r = await fetch(`data/${f}.json?t=${Date.now()}`);
+      if(r.ok) data[f] = await r.json();
+    } catch(e) { console.warn('Could not load',f); }
+  }));
+  renderAll();
+}
+
+function renderAll() {
+  // Scores
+  const s = data.picks?.season_score;
+  if(s) {
+    document.getElementById('disp-joe').textContent = s.joe;
+    document.getElementById('disp-leo').textContent = s.leo;
+    document.getElementById('score-joe').value = s.joe;
+    document.getElementById('score-leo').value = s.leo;
+    document.getElementById('score-rollover').value = s.rollover||0;
+  }
+
+  // Week selector
+  const weeks = data.picks?.weeks || [];
+  const sel = document.getElementById('result-week');
+  sel.innerHTML = weeks.map(w=>`<option value="${w.week}">Week ${w.week} — ${w.event}</option>`).join('');
+  sel.addEventListener('change', updateResultForm);
+  updateResultForm();
+
+  // Week history
+  const hist = document.getElementById('week-history');
+  hist.innerHTML = weeks.map(w=>`
+    <div class="week-row">
+      <div class="week-row-name">Wk ${w.week} · ${w.event}</div>
+      <div class="week-row-result ${w.result||'upcoming'}">${
+        w.result==='push'?'PUSH':
+        w.result==='leo'?`LEO +${w.points_awarded}`:
+        w.result==='joe'?`JOE +${w.points_awarded}`:
+        'Upcoming'
+      }</div>
+    </div>`).join('');
+
+  // Live toggle
+  const live = data.results?.live;
+  if(live) {
+    document.getElementById('live-toggle').value = String(live.active||false);
+    document.getElementById('live-event-name').value = live.event_name||'';
+    document.getElementById('live-round').value = live.current_round||1;
+  }
+
+  // Banned
+  const banned = data.picks?.game_config?.banned_players||[];
+  document.getElementById('banned-list').innerHTML = banned.map(p=>`
+    <div class="week-row" style="margin-bottom:6px;">
+      <div class="week-row-name">${p}</div>
+      <button onclick="removeBan('${p}')" style="background:var(--red-dim);color:var(--red);border:1px solid rgba(240,69,69,0.3);border-radius:6px;padding:4px 10px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">Remove</button>
+    </div>`).join('') || '<div style="font-size:13px;color:var(--muted);padding:4px 0;">No banned players</div>';
+}
+
+function updateResultForm() {
+  const weekNum = parseInt(document.getElementById('result-week').value);
+  const week = data.picks?.weeks?.find(w=>w.week===weekNum);
+  if(week) {
+    document.getElementById('result-winner').value = week.winner||'';
+    document.getElementById('result-team').value = week.winning_team||'';
+    document.getElementById('result-pts').value = week.points_awarded||week.points_available||20;
+  }
+}
+
+// ── SAVE SCORES ──
+function saveScores() {
+  if(!data.picks) return;
+  data.picks.season_score.joe = parseInt(document.getElementById('score-joe').value)||0;
+  data.picks.season_score.leo = parseInt(document.getElementById('score-leo').value)||0;
+  data.picks.season_score.rollover = parseInt(document.getElementById('score-rollover').value)||0;
+  data.picks.updated_at = new Date().toISOString();
+  document.getElementById('disp-joe').textContent = data.picks.season_score.joe;
+  document.getElementById('disp-leo').textContent = data.picks.season_score.leo;
+  showToast('Scores updated — download picks.json to save');
+}
+
+// ── SAVE RESULT ──
+function saveResult() {
+  if(!data.picks) return;
+  const weekNum = parseInt(document.getElementById('result-week').value);
+  const week = data.picks.weeks.find(w=>w.week===weekNum);
+  if(!week) return;
+  const winner = document.getElementById('result-winner').value.trim();
+  const team = document.getElementById('result-team').value;
+  const pts = parseInt(document.getElementById('result-pts').value)||20;
+  week.winner = winner||null;
+  week.winning_team = team||null;
+  week.result = team||'push';
+  week.points_awarded = team?pts:0;
+  week.status = 'done';
+  if(!team && week.week < data.picks.weeks.length) {
+    const next = data.picks.weeks.find(w=>w.week===weekNum+1);
+    if(next) { week.rolled_to=weekNum+1; next.points_available=(next.points_available||20)+pts; }
+  }
+  // Update season score
+  if(team) {
+    data.picks.season_score[team] = (data.picks.season_score[team]||0)+pts;
+  }
+  data.picks.updated_at = new Date().toISOString();
+  renderAll();
+  showToast(`Week ${weekNum} recorded — download picks.json`);
+}
+
+// ── LIVE TOGGLE ──
+function saveLive() {
+  if(!data.results) return;
+  const active = document.getElementById('live-toggle').value==='true';
+  data.results.live.active = active;
+  data.results.live.event_name = document.getElementById('live-event-name').value;
+  data.results.live.current_round = parseInt(document.getElementById('live-round').value)||1;
+  data.results.updated_at = new Date().toISOString();
+  showToast('Live status updated — download results.json');
+}
+
+// ── BANNED ──
+function addBan() {
+  const name = document.getElementById('ban-input').value.trim();
+  if(!name||!data.picks) return;
+  if(!data.picks.game_config.banned_players.includes(name)) {
+    data.picks.game_config.banned_players.push(name);
+    document.getElementById('ban-input').value='';
+    renderAll();
+    showToast(`${name} banned — download picks.json`);
+  }
+}
+function removeBan(name) {
+  if(!data.picks) return;
+  data.picks.game_config.banned_players = data.picks.game_config.banned_players.filter(p=>p!==name);
+  renderAll();
+  showToast(`${name} unbanned — download picks.json`);
+}
+
+// ── DOWNLOADS ──
+function downloadPicks() {
+  if(!data.picks) return;
+  download('picks.json', JSON.stringify(data.picks, null, 2));
+}
+function downloadResults() {
+  if(!data.results) return;
+  download('results.json', JSON.stringify(data.results, null, 2));
+}
+function download(filename, text) {
+  const a = document.createElement('a');
+  a.href = 'data:application/json;charset=utf-8,'+encodeURIComponent(text);
+  a.download = filename;
+  a.click();
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
