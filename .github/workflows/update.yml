@@ -1,0 +1,47 @@
+name: Update DGPT Data
+
+on:
+  schedule:
+    # Run every day at 9am, 2pm, and 10pm ET (UTC-4 in summer)
+    - cron: '0 13 * * *'   # 9am ET
+    - cron: '0 18 * * *'   # 2pm ET
+    - cron: '0 2 * * *'    # 10pm ET (next day UTC)
+    # During tournament weekends (Thu–Sun), run every 30 min
+    - cron: '*/30 12-23 * * 4,5,6,0'  # Thu–Sun daytime UTC
+  workflow_dispatch:        # Allow manual trigger from GitHub Actions tab
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch standings and results
+        run: node scripts/fetch.js
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --quiet data/ || echo "changed=true" >> $GITHUB_OUTPUT
+
+      - name: Commit and push if changed
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "dgpt-bot"
+          git config user.email "bot@dgpt-pickem"
+          git add data/
+          git commit -m "Auto-update data $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
+
+      - name: No changes
+        if: steps.changes.outputs.changed != 'true'
+        run: echo "No data changes detected."
