@@ -612,21 +612,55 @@ function renderSeason() {
 }
 
 // ══ DRAFT ══
+function hasSubmitted(user) {
+  const cw = getCurrentWeek();
+  return cw?.[user]?.submitted || false;
+}
+function draftOpenDate(cw) { return cw?.draft_open ? new Date(cw.draft_open+'T00:00:00') : null; }
+function draftCloseDate(cw) { return cw?.draft_close ? new Date(cw.draft_close+'T23:59:59') : null; }
 function isDraftOpen() {
   const cw = getCurrentWeek();
   if(!cw?.draft_open||!cw?.draft_close) return false;
   const now = new Date();
-  return now >= new Date(cw.draft_open) && now <= new Date(cw.draft_close+'T23:59:59');
+  return now >= draftOpenDate(cw) && now <= draftCloseDate(cw);
 }
-function hasSubmitted(user) {
-  const cw = getCurrentWeek();
-  return cw?.[user]?.submitted || false;
+function isDraftPending(cw) {
+  const open = draftOpenDate(cw);
+  return open && new Date() < open;
+}
+function renderDraftCountdown(targetDate, labelPrefix) {
+  const diff = Math.max(0, targetDate - new Date());
+  const d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000),
+        m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+  return `<div style="display:flex;gap:8px;align-items:center;justify-content:center;margin:10px 0;">
+    ${[{v:d,l:'Days'},{v:h,l:'Hrs'},{v:m,l:'Min'},{v:s,l:'Sec'}].map((u,i)=>`
+      ${i>0?'<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:20px;font-weight:800;color:var(--muted);margin-bottom:14px;">:</div>':''}
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div style="font-family:\'Barlow Condensed\',sans-serif;font-size:26px;font-weight:900;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:5px 10px;min-width:48px;text-align:center;" id="dcd-${u.l.toLowerCase()}">${String(u.v).padStart(2,'0')}</div>
+        <div style="font-family:\'Barlow Condensed\',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">${u.l}</div>
+      </div>`).join('')}
+  </div>`;
+}
+function startDraftCountdown(targetDate, ids) {
+  if(countdownTimer) clearInterval(countdownTimer);
+  function tick() {
+    const diff = Math.max(0, targetDate - new Date());
+    ids.forEach((id,i)=>{
+      const el = document.getElementById(id);
+      if(!el){clearInterval(countdownTimer);return;}
+      const vals=[Math.floor(diff/86400000),Math.floor(diff%86400000/3600000),Math.floor(diff%3600000/60000),Math.floor(diff%60000/1000)];
+      el.textContent = String(vals[i]).padStart(2,'0');
+    });
+    if(diff===0) { clearInterval(countdownTimer); renderDraft(); }
+  }
+  tick(); countdownTimer=setInterval(tick,1000);
 }
 function renderDraft() {
   const el = document.getElementById('view-draft');
   const cw = getCurrentWeek();
   if(!cw) { el.innerHTML = '<div class="loading">No upcoming events</div>'; return; }
   const open = isDraftOpen();
+  const pending = isDraftPending(cw);
   const submitted = hasSubmitted(currentUser);
   const otherUser = currentUser==='leo'?'joe':'leo';
   const otherSubmitted = hasSubmitted(otherUser);
@@ -635,7 +669,38 @@ function renderDraft() {
   const joe = cw.joe?.resolved_picks||[];
   const leoForced = cw.leo?.forced_pick;
   const joeForced = cw.joe?.forced_pick;
-  const firstPick = cw.first_pick||'leo';
+  const firstPick = cw.first_pick||'joe';
+  const openDate = draftOpenDate(cw);
+  const closeDate = draftCloseDate(cw);
+
+  // Build status block
+  let statusBlock = '';
+  if(submitted) {
+    statusBlock = `<div class="draft-cta submitted">
+      <div class="draft-cta-title">✓ Your Picks Are Locked</div>
+      <div class="draft-cta-sub">${otherSubmitted?`Both players have submitted — rosters are set.`:`Waiting on ${otherUser==='leo'?'Leo':'Joe'} to submit their picks.`}</div>
+      <button class="btn secondary" onclick="startSubmit()">Edit Picks</button>
+    </div>`;
+  } else if(open) {
+    statusBlock = `<div class="draft-cta open">
+      <div class="draft-cta-title">🟢 Draft Window Open</div>
+      <div class="draft-cta-sub">Closes ${closeDate?closeDate.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})+' at midnight':''}</div>
+      ${renderDraftCountdown(closeDate,'')}
+      <button class="btn" onclick="startSubmit()">Submit My Picks →</button>
+    </div>`;
+  } else if(pending) {
+    statusBlock = `<div class="draft-closed" style="text-align:center;">
+      <div class="draft-closed-label" style="color:var(--gold);margin-bottom:4px;">⏳ Draft Opens Soon</div>
+      <div class="draft-closed-sub" style="margin-bottom:10px;">Picks open ${openDate?openDate.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'}):''}</div>
+      ${renderDraftCountdown(openDate,'')}
+    </div>`;
+  } else {
+    statusBlock = `<div class="draft-closed">
+      <div class="draft-closed-label">Draft Window Closed</div>
+      <div class="draft-closed-sub">Opens Monday of tournament week · closes Wednesday at midnight</div>
+    </div>`;
+  }
+
   el.innerHTML = `
     <div class="draft-event-card">
       <div class="dec-name">${upcomingEvent?.name||cw.event}</div>
@@ -649,9 +714,7 @@ function renderDraft() {
         <div class="pick-chip neutral">+ Forced</div>
       </div>
     </div>
-    ${open && !submitted ? `<div class="draft-cta open"><div class="draft-cta-title">Draft Window Open</div><div class="draft-cta-sub">Submit your ranked ${GAME.draft_picks} players and ${GAME.forced_picks} forced picks. Closes ${cw.draft_close?new Date(cw.draft_close).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Wed'} midnight.</div><button class="btn" onclick="startSubmit()">Submit My Picks →</button></div>` : ''}
-    ${submitted ? `<div class="draft-cta submitted"><div class="draft-cta-title">✓ Picks Submitted</div><div class="draft-cta-sub">Your picks are locked in for Week ${cw.week}. ${otherSubmitted?`${otherUser==='leo'?'Leo':'Joe'} has also submitted.`:`Waiting on ${otherUser==='leo'?'Leo':'Joe'}...`}</div><button class="btn secondary" onclick="startSubmit()">Edit Picks</button></div>` : ''}
-    ${!open && !submitted ? `<div class="draft-closed"><div class="draft-closed-label">Draft Window Closed</div><div class="draft-closed-sub">Opens Monday of tournament week · closes Wednesday at midnight</div></div>` : ''}
+    ${statusBlock}
     <div class="section-label">Week ${cw.week} Rosters</div>
     ${leo.length||joe.length||leoForced||joeForced ? `
       <div class="roster-grid">
@@ -659,18 +722,28 @@ function renderDraft() {
           <div class="rc-title leo">Leo</div>
           ${leo.map((p,i)=>`<div class="rc-player"><span class="rc-num">P${i===0?1:4}</span>${p}</div>`).join('')}
           ${leoForced?`<div class="rc-player"><span class="rc-num" style="font-style:italic">F</span><span class="rc-forced">${leoForced}*</span></div>`:''}
-          ${!leo.length&&!leoForced?'<div class="rc-forced" style="padding:4px 0">Pending submission</div>':''}
+          ${!leo.length&&!leoForced?'<div class="rc-forced" style="padding:8px 0;color:var(--muted);">Pending</div>':''}
         </div>
         <div class="roster-card">
           <div class="rc-title joe">Joe</div>
           ${joe.map((p,i)=>`<div class="rc-player"><span class="rc-num">P${i===0?2:3}</span>${p}</div>`).join('')}
           ${joeForced?`<div class="rc-player"><span class="rc-num" style="font-style:italic">F</span><span class="rc-forced">${joeForced}*</span></div>`:''}
-          ${!joe.length&&!joeForced?'<div class="rc-forced" style="padding:4px 0">Pending submission</div>':''}
+          ${!joe.length&&!joeForced?'<div class="rc-forced" style="padding:8px 0;color:var(--muted);">Pending</div>':''}
         </div>
       </div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:14px;">* Forced picks assigned by opponent</div>` :
-      `<div style="font-size:13px;color:var(--muted);text-align:center;padding:20px;">Rosters will appear once both players submit their picks.</div>`}
+      `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:4px;">No rosters yet</div>
+        <div style="font-size:12px;color:var(--muted);">Submit your picks during the draft window — rosters resolve automatically.</div>
+      </div>`}
   `;
+
+  // Start live countdown if pending or open
+  if(pending && openDate) {
+    startDraftCountdown(openDate, ['dcd-days','dcd-hrs','dcd-min','dcd-sec']);
+  } else if(open && closeDate) {
+    startDraftCountdown(closeDate, ['dcd-days','dcd-hrs','dcd-min','dcd-sec']);
+  }
 }
 
 // ══ DRAFT SUBMISSION ══
