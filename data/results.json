@@ -1,43 +1,79 @@
 {
   "updated_at": "2026-04-04T00:00:00Z",
-  "live": {
-    "active": false,
-    "event_id": null,
-    "event_name": null,
-    "location": null,
-    "current_round": null,
-    "total_rounds": null,
-    "round_status": null,
-    "holes_complete": null,
-    "leaderboard": []
+  "season": 2026,
+  "game_config": {
+    "banned_players": ["Gannon Buhr"],
+    "points_per_week": 20,
+    "draft_picks_each": 8,
+    "forced_picks_each": 6
   },
-  "previous": {
-    "event_name": "Queen City Classic",
-    "location": "Charlotte, NC",
-    "date": "Mar 27–29, 2026",
-    "winner": "Richard Wysocki",
-    "winner_team": "leo",
-    "leaderboard": [
-      { "rank": 1,  "name": "Richard Wysocki",  "score": "-22" },
-      { "rank": 2,  "name": "Gannon Buhr",       "score": "-21" },
-      { "rank": 3,  "name": "Joseph Anderson",   "score": "-19" },
-      { "rank": 4,  "name": "Evan Smith",         "score": "-18" },
-      { "rank": 5,  "name": "Isaac Robinson",     "score": "-17" },
-      { "rank": 6,  "name": "Adam Hammes",        "score": "-16" },
-      { "rank": 7,  "name": "Casey White",        "score": "-15" },
-      { "rank": 8,  "name": "Kyle Klein",         "score": "-14" },
-      { "rank": 9,  "name": "Aaron Gossage",      "score": "-13" },
-      { "rank": 10, "name": "Sullivan Tipton",    "score": "-12" },
-      { "rank": 11, "name": "Calvin Heimburg",    "score": "-11" },
-      { "rank": 12, "name": "Chris Dickerson",    "score": "-10" },
-      { "rank": 13, "name": "Raven Newsom",       "score": "-9"  },
-      { "rank": 14, "name": "Luke Taylor",        "score": "-8"  },
-      { "rank": 15, "name": "Harper Thompson",    "score": "-7"  },
-      { "rank": 16, "name": "Niklas Anttila",     "score": "-6"  },
-      { "rank": 17, "name": "Matthew Orum",       "score": "-5"  },
-      { "rank": 18, "name": "Paul McBeth",        "score": "-4"  },
-      { "rank": 19, "name": "Andrew Marwede",     "score": "-3"  },
-      { "rank": 20, "name": "Parker Welck",       "score": "-2"  }
-    ]
-  }
+  "season_score": {
+    "leo": 20,
+    "joe": 40,
+    "rollover": 0
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "event": "Supreme Flight Open",
+      "location": "Brooksville, FL",
+      "points_available": 20,
+      "first_pick": "joe",
+      "status": "done",
+      "result": "push",
+      "winner": "Richard Wysocki",
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": 2,
+      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
+      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+    },
+    {
+      "week": 2,
+      "event": "Big Easy Open",
+      "location": "New Orleans, LA",
+      "points_available": 40,
+      "first_pick": "leo",
+      "status": "done",
+      "result": "joe",
+      "winner": "Gannon Buhr",
+      "winning_team": "joe",
+      "points_awarded": 40,
+      "rolled_to": null,
+      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
+      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": ["Gannon Buhr"], "forced_pick": null }
+    },
+    {
+      "week": 3,
+      "event": "Queen City Classic",
+      "location": "Charlotte, NC",
+      "points_available": 20,
+      "first_pick": "joe",
+      "status": "done",
+      "result": "leo",
+      "winner": "Gannon Buhr",
+      "winning_team": "leo",
+      "points_awarded": 20,
+      "rolled_to": null,
+      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": ["Gannon Buhr"], "forced_pick": null },
+      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+    },
+    {
+      "week": 4,
+      "event": "PDGA Champions Cup",
+      "location": "Lynchburg, VA",
+      "points_available": 20,
+      "first_pick": "joe",
+      "status": "upcoming",
+      "result": null,
+      "winner": null,
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": null,
+      "draft_open": "2026-04-06",
+      "draft_close": "2026-04-08",
+      "leo": { "submitted": false, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
+      "joe": { "submitted": false, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+    }
+  ]
 }
