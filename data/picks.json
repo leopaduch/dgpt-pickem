@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-04-04T00:00:00Z",
+  "updated_at": "2026-04-08T20:17:25.802Z",
   "season": 2026,
   "game_config": {
-    "banned_players": ["Gannon Buhr"],
+    "banned_players": [
+      "Gannon Buhr"
+    ],
     "points_per_week": 20,
     "draft_picks_each": 8,
     "forced_picks_each": 6
@@ -25,8 +27,20 @@
       "winning_team": null,
       "points_awarded": 0,
       "rolled_to": 2,
-      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
-      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+      "leo": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
     },
     {
       "week": 2,
@@ -40,8 +54,22 @@
       "winning_team": "joe",
       "points_awarded": 40,
       "rolled_to": null,
-      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
-      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": ["Gannon Buhr"], "forced_pick": null }
+      "leo": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [
+          "Gannon Buhr"
+        ],
+        "forced_pick": null
+      }
     },
     {
       "week": 3,
@@ -55,8 +83,22 @@
       "winning_team": "leo",
       "points_awarded": 20,
       "rolled_to": null,
-      "leo": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": ["Gannon Buhr"], "forced_pick": null },
-      "joe": { "submitted": true, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+      "leo": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [
+          "Gannon Buhr"
+        ],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": true,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
     },
     {
       "week": 4,
@@ -72,8 +114,37 @@
       "rolled_to": null,
       "draft_open": "2026-04-06",
       "draft_close": "2026-04-08",
-      "leo": { "submitted": false, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null },
-      "joe": { "submitted": false, "draft8": [], "forced6": [], "resolved_picks": [], "forced_pick": null }
+      "leo": {
+        "submitted": true,
+        "draft8": [
+          "Richard Wysocki",
+          "Joseph Anderson",
+          "Evan Smith",
+          "Isaac Robinson",
+          "Casey White",
+          "Adam Hammes",
+          "Kyle Klein",
+          "Aaron Gossage"
+        ],
+        "forced6": [
+          "Raven Newsom",
+          "Aaron Gossage",
+          "Kyle Klein",
+          "Sullivan Tipton",
+          "Adam Hammes",
+          "Isaac Robinson"
+        ],
+        "resolved_picks": [],
+        "forced_pick": null,
+        "submitted_at": "2026-04-08T20:17:25.802Z"
+      },
+      "joe": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
     }
   ]
 }
