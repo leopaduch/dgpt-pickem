@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-08T20:18:14.143Z",
+  "updated_at": "2026-04-08T20:23:36.082Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -117,29 +117,29 @@
       "leo": {
         "submitted": true,
         "draft8": [
-          "Richard Wysocki",
-          "Joseph Anderson",
-          "Evan Smith",
           "Isaac Robinson",
+          "Luke Taylor",
+          "Raven Newsom",
           "Casey White",
-          "Adam Hammes",
           "Kyle Klein",
-          "Aaron Gossage"
+          "Adam Hammes",
+          "Aaron Gossage",
+          "Sullivan Tipton"
         ],
         "forced6": [
+          "Casey White",
           "Raven Newsom",
+          "Sullivan Tipton",
           "Aaron Gossage",
           "Kyle Klein",
-          "Sullivan Tipton",
-          "Adam Hammes",
-          "Isaac Robinson"
+          "Adam Hammes"
         ],
         "resolved_picks": [
-          "Joseph Anderson",
-          "Evan Smith"
+          "Isaac Robinson",
+          "Luke Taylor"
         ],
         "forced_pick": "Raven Newsom",
-        "submitted_at": "2026-04-08T20:17:25.802Z"
+        "submitted_at": "2026-04-08T20:23:36.082Z"
       },
       "joe": {
         "submitted": true,
@@ -163,9 +163,9 @@
         ],
         "resolved_picks": [
           "Richard Wysocki",
-          "Isaac Robinson"
+          "Joseph Anderson"
         ],
-        "forced_pick": "Raven Newsom",
+        "forced_pick": "Casey White",
         "submitted_at": "2026-04-08T20:18:14.143Z"
       }
     }
