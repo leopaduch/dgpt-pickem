@@ -708,8 +708,8 @@ function renderDraft() {
       <div class="dec-order">
         <div class="dec-order-label">Week ${cw.week} order:</div>
         <div class="pick-chip ${firstPick}">${firstPick==='leo'?'Leo':'Joe'} 1st</div>
-        <div class="pick-chip ${otherUser}">${otherUser==='leo'?'Leo':'Joe'} 2nd</div>
-        <div class="pick-chip ${otherUser}">${otherUser==='leo'?'Leo':'Joe'} 3rd</div>
+        <div class="pick-chip ${firstPick==='leo'?'joe':'leo'}">${firstPick==='leo'?'Joe':'Leo'} 2nd</div>
+        <div class="pick-chip ${firstPick==='leo'?'joe':'leo'}">${firstPick==='leo'?'Joe':'Leo'} 3rd</div>
         <div class="pick-chip ${firstPick}">${firstPick==='leo'?'Leo':'Joe'} 4th</div>
         <div class="pick-chip neutral">+ Forced</div>
       </div>
