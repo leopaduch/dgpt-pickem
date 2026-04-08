@@ -2,13 +2,17 @@ name: Update DGPT Data
 
 on:
   schedule:
-    # Run every day at 9am, 2pm, and 10pm ET (UTC-4 in summer)
-    - cron: '0 13 * * *'   # 9am ET
-    - cron: '0 18 * * *'   # 2pm ET
-    - cron: '0 2 * * *'    # 10pm ET (next day UTC)
-    # During tournament weekends (Thu–Sun), run every 30 min
-    - cron: '*/30 12-23 * * 4,5,6,0'  # Thu–Sun daytime UTC
-  workflow_dispatch:        # Allow manual trigger from GitHub Actions tab
+    # 9am, 2pm, 10pm ET daily
+    - cron: '0 13 * * *'
+    - cron: '0 18 * * *'
+    - cron: '0 2 * * *'
+    # Every 30 min Thu–Sun during tournaments
+    - cron: '*/30 12-23 * * 4,5,6,0'
+    # Monday 9am ET — open draft window
+    - cron: '0 13 * * 1'
+    # Wednesday 11pm ET — close draft window + resolve
+    - cron: '0 3 * * 4'
+  workflow_dispatch:
 
 jobs:
   update-data:
@@ -25,7 +29,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch standings and results
+      - name: Fetch all data
         run: node scripts/fetch.js
 
       - name: Check for changes
@@ -39,9 +43,9 @@ jobs:
           git config user.name "dgpt-bot"
           git config user.email "bot@dgpt-pickem"
           git add data/
-          git commit -m "Auto-update data $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git commit -m "Auto-update $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
 
       - name: No changes
         if: steps.changes.outputs.changed != 'true'
-        run: echo "No data changes detected."
+        run: echo "No changes detected."
