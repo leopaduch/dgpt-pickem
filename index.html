@@ -849,24 +849,71 @@ function addForced6(name) {
 }
 function removeForced6(i){forced6.splice(i,1);renderSubmitStep();}
 function nextStep(){submitStep++;renderSubmitStep();}
-function confirmSubmit() {
-  // In production this would POST to a backend or update picks.json via GitHub API
-  // For now, store in localStorage as pending
+async function confirmSubmit() {
   const cw = getCurrentWeek();
-  const key = `dgpt_picks_w${cw?.week}_${currentUser}`;
-  localStorage.setItem(key, JSON.stringify({ draft8: draft8.map(p=>p.name), forced6: forced6.map(p=>p.name), submitted_at: new Date().toISOString() }));
-  // Update local data state
-  if(cw && data.picks) {
-    const weekData = data.picks.weeks.find(w=>w.week===cw.week);
-    if(weekData) { weekData[currentUser].submitted = true; weekData[currentUser].draft8 = draft8.map(p=>p.name); weekData[currentUser].forced6 = forced6.map(p=>p.name); }
-  }
-  document.getElementById('submit-content').innerHTML = `
+  const el = document.getElementById('submit-content');
+  const isLeo = currentUser === 'leo';
+
+  // Show loading state
+  el.innerHTML = `
     <div class="success-wrap">
-      <div class="success-icon">🎯</div>
-      <div class="success-title" style="color:${currentUser==='leo'?'var(--leo)':'var(--joe)'}">${currentUser==='leo'?'Leo':'Joe'}'s Picks Locked!</div>
-      <div class="success-sub">Your Week ${cw?.week} rankings are saved.<br>${currentUser==='leo'?'Joe':'Leo'} still needs to submit theirs.</div>
-      <button class="btn" onclick="cancelSubmit()" style="max-width:200px;margin:0 auto;">Back to Draft</button>
+      <div class="success-icon">⏳</div>
+      <div class="success-title" style="color:var(--muted)">Locking In...</div>
+      <div class="success-sub">Saving your picks to the server.</div>
     </div>`;
+
+  try {
+    const res = await fetch('/api/submit-picks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        user: currentUser,
+        week: cw.week,
+        draft8: draft8.map(p => p.name),
+        forced6: forced6.map(p => p.name)
+      })
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Submission failed');
+
+    // Update local data so UI reflects immediately without reload
+    if (cw && data.picks) {
+      const weekData = data.picks.weeks.find(w => w.week === cw.week);
+      if (weekData) {
+        weekData[currentUser].submitted = true;
+        weekData[currentUser].draft8 = draft8.map(p => p.name);
+        weekData[currentUser].forced6 = forced6.map(p => p.name);
+        if (result.resolved) {
+          weekData.leo.resolved_picks = result.resolved.leo;
+          weekData.joe.resolved_picks = result.resolved.joe;
+          weekData.leo.forced_pick = result.resolved.leo_forced;
+          weekData.joe.forced_pick = result.resolved.joe_forced;
+        }
+      }
+    }
+
+    const bothDone = result.both_submitted;
+    el.innerHTML = `
+      <div class="success-wrap">
+        <div class="success-icon">🎯</div>
+        <div class="success-title" style="color:${isLeo?'var(--leo)':'var(--joe)'}">${isLeo?'Leo':'Joe'}'s Picks Locked!</div>
+        <div class="success-sub">${bothDone
+          ? 'Both players have submitted — rosters are set for Week ' + cw.week + '!'
+          : 'Your Week ' + cw.week + ' rankings are saved.<br>' + (isLeo?'Joe':'Leo') + ' still needs to submit theirs.'
+        }</div>
+        <button class="btn" onclick="cancelSubmit()" style="max-width:200px;margin:0 auto;">Back to Draft</button>
+      </div>`;
+
+  } catch(e) {
+    el.innerHTML = `
+      <div class="success-wrap">
+        <div class="success-icon">❌</div>
+        <div class="success-title" style="color:var(--red)">Submission Failed</div>
+        <div class="success-sub">${e.message}<br><br>Please try again.</div>
+        <button class="btn secondary" onclick="submitStep=3;renderSubmitStep()" style="max-width:200px;margin:0 auto;">Try Again</button>
+      </div>`;
+  }
 }
 
 // ══ STANDINGS ══
