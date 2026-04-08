@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-08T20:17:25.802Z",
+  "updated_at": "2026-04-08T20:18:14.143Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -106,7 +106,7 @@
       "location": "Lynchburg, VA",
       "points_available": 20,
       "first_pick": "joe",
-      "status": "upcoming",
+      "status": "locked",
       "result": null,
       "winner": null,
       "winning_team": null,
@@ -134,16 +134,39 @@
           "Adam Hammes",
           "Isaac Robinson"
         ],
-        "resolved_picks": [],
-        "forced_pick": null,
+        "resolved_picks": [
+          "Joseph Anderson",
+          "Evan Smith"
+        ],
+        "forced_pick": "Raven Newsom",
         "submitted_at": "2026-04-08T20:17:25.802Z"
       },
       "joe": {
-        "submitted": false,
-        "draft8": [],
-        "forced6": [],
-        "resolved_picks": [],
-        "forced_pick": null
+        "submitted": true,
+        "draft8": [
+          "Richard Wysocki",
+          "Joseph Anderson",
+          "Evan Smith",
+          "Isaac Robinson",
+          "Casey White",
+          "Adam Hammes",
+          "Kyle Klein",
+          "Aaron Gossage"
+        ],
+        "forced6": [
+          "Raven Newsom",
+          "Aaron Gossage",
+          "Sullivan Tipton",
+          "Kyle Klein",
+          "Adam Hammes",
+          "Casey White"
+        ],
+        "resolved_picks": [
+          "Richard Wysocki",
+          "Isaac Robinson"
+        ],
+        "forced_pick": "Raven Newsom",
+        "submitted_at": "2026-04-08T20:18:14.143Z"
       }
     }
   ]
