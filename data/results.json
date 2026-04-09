@@ -1,5 +1,4 @@
 {
-  "updated_at": "2026-04-08T00:00:00Z",
   "live": {
     "active": false,
     "event_id": null,
@@ -19,26 +18,107 @@
     "winner": "Gannon Buhr",
     "winner_team": "leo",
     "leaderboard": [
-      { "rank": 1,  "name": "Gannon Buhr",     "score": "-21" },
-      { "rank": 2,  "name": "Richard Wysocki",  "score": "-20" },
-      { "rank": 3,  "name": "Joseph Anderson",  "score": "-18" },
-      { "rank": 4,  "name": "Evan Smith",       "score": "-17" },
-      { "rank": 5,  "name": "Isaac Robinson",   "score": "-16" },
-      { "rank": 6,  "name": "Adam Hammes",      "score": "-15" },
-      { "rank": 7,  "name": "Casey White",      "score": "-14" },
-      { "rank": 8,  "name": "Aaron Gossage",    "score": "-13" },
-      { "rank": 9,  "name": "Kyle Klein",       "score": "-12" },
-      { "rank": 10, "name": "Sullivan Tipton",  "score": "-11" },
-      { "rank": 11, "name": "Calvin Heimburg",  "score": "-10" },
-      { "rank": 12, "name": "Chris Dickerson",  "score": "-9"  },
-      { "rank": 13, "name": "Raven Newsom",     "score": "-8"  },
-      { "rank": 14, "name": "Luke Taylor",      "score": "-7"  },
-      { "rank": 15, "name": "Harper Thompson",  "score": "-6"  },
-      { "rank": 16, "name": "Joel Freeman",     "score": "-5"  },
-      { "rank": 17, "name": "Chandler Kramer",  "score": "-4"  },
-      { "rank": 18, "name": "Matthew Orum",     "score": "-3"  },
-      { "rank": 19, "name": "Paul McBeth",      "score": "-2"  },
-      { "rank": 20, "name": "Niklas Anttila",   "score": "-1"  }
+      {
+        "rank": 1,
+        "name": "Gannon Buhr",
+        "score": "-21"
+      },
+      {
+        "rank": 2,
+        "name": "Richard Wysocki",
+        "score": "-20"
+      },
+      {
+        "rank": 3,
+        "name": "Joseph Anderson",
+        "score": "-18"
+      },
+      {
+        "rank": 4,
+        "name": "Evan Smith",
+        "score": "-17"
+      },
+      {
+        "rank": 5,
+        "name": "Isaac Robinson",
+        "score": "-16"
+      },
+      {
+        "rank": 6,
+        "name": "Adam Hammes",
+        "score": "-15"
+      },
+      {
+        "rank": 7,
+        "name": "Casey White",
+        "score": "-14"
+      },
+      {
+        "rank": 8,
+        "name": "Aaron Gossage",
+        "score": "-13"
+      },
+      {
+        "rank": 9,
+        "name": "Kyle Klein",
+        "score": "-12"
+      },
+      {
+        "rank": 10,
+        "name": "Sullivan Tipton",
+        "score": "-11"
+      },
+      {
+        "rank": 11,
+        "name": "Calvin Heimburg",
+        "score": "-10"
+      },
+      {
+        "rank": 12,
+        "name": "Chris Dickerson",
+        "score": "-9"
+      },
+      {
+        "rank": 13,
+        "name": "Raven Newsom",
+        "score": "-8"
+      },
+      {
+        "rank": 14,
+        "name": "Luke Taylor",
+        "score": "-7"
+      },
+      {
+        "rank": 15,
+        "name": "Harper Thompson",
+        "score": "-6"
+      },
+      {
+        "rank": 16,
+        "name": "Joel Freeman",
+        "score": "-5"
+      },
+      {
+        "rank": 17,
+        "name": "Chandler Kramer",
+        "score": "-4"
+      },
+      {
+        "rank": 18,
+        "name": "Matthew Orum",
+        "score": "-3"
+      },
+      {
+        "rank": 19,
+        "name": "Paul McBeth",
+        "score": "-2"
+      },
+      {
+        "rank": 20,
+        "name": "Niklas Anttila",
+        "score": "-1"
+      }
     ]
-  }
+  },
+  "updated_at": "2026-04-09T04:31:40.795Z"
 }
