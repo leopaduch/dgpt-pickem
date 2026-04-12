@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-08T20:24:30.153Z",
+  "updated_at": "2026-04-12T04:44:26.839Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -12,7 +12,7 @@
   "season_score": {
     "leo": 20,
     "joe": 40,
-    "rollover": 0
+    "rollover": 20
   },
   "weeks": [
     {
@@ -106,12 +106,12 @@
       "location": "Lynchburg, VA",
       "points_available": 20,
       "first_pick": "joe",
-      "status": "locked",
-      "result": null,
-      "winner": null,
+      "status": "done",
+      "result": "push",
+      "winner": "Gannon Buhr",
       "winning_team": null,
       "points_awarded": 0,
-      "rolled_to": null,
+      "rolled_to": 5,
       "draft_open": "2026-04-06",
       "draft_close": "2026-04-08",
       "leo": {
@@ -167,6 +167,35 @@
         ],
         "forced_pick": "Casey White",
         "submitted_at": "2026-04-08T20:24:30.152Z"
+      }
+    },
+    {
+      "week": 5,
+      "event": "Jonesboro Open",
+      "location": "Jonesboro, AR",
+      "points_available": 40,
+      "first_pick": "leo",
+      "status": "upcoming",
+      "result": null,
+      "winner": null,
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": null,
+      "draft_open": "2026-04-13",
+      "draft_close": "2026-04-16",
+      "leo": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
       }
     }
   ]
