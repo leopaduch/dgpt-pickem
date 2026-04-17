@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-13T04:55:46.340Z",
+  "updated_at": "2026-04-17T04:46:48.831Z",
   "season": 2026,
   "events": [
     {
@@ -71,7 +71,7 @@
       "course": "Disc Side of Heaven",
       "start": "2026-04-17",
       "end": "2026-04-19",
-      "status": "upcoming",
+      "status": "live",
       "winner_mpo": null,
       "winner_fpo": null,
       "draft_open": "2026-04-13",

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-12T04:44:26.839Z",
+  "updated_at": "2026-04-17T04:46:48.830Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -175,7 +175,7 @@
       "location": "Jonesboro, AR",
       "points_available": 40,
       "first_pick": "leo",
-      "status": "upcoming",
+      "status": "locked",
       "result": null,
       "winner": null,
       "winning_team": null,
