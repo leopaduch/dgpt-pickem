@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-17T04:46:48.830Z",
+  "updated_at": "2026-04-19T04:48:20.300Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -12,7 +12,7 @@
   "season_score": {
     "leo": 20,
     "joe": 40,
-    "rollover": 20
+    "rollover": 60
   },
   "weeks": [
     {
@@ -175,14 +175,43 @@
       "location": "Jonesboro, AR",
       "points_available": 40,
       "first_pick": "leo",
-      "status": "locked",
+      "status": "done",
+      "result": "push",
+      "winner": "Gannon Buhr",
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": 6,
+      "draft_open": "2026-04-13",
+      "draft_close": "2026-04-16",
+      "leo": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
+    },
+    {
+      "week": 6,
+      "event": "Kansas City Wide Open",
+      "location": "Liberty, MO",
+      "points_available": 80,
+      "first_pick": "joe",
+      "status": "upcoming",
       "result": null,
       "winner": null,
       "winning_team": null,
       "points_awarded": 0,
       "rolled_to": null,
-      "draft_open": "2026-04-13",
-      "draft_close": "2026-04-16",
+      "draft_open": "2026-04-20",
+      "draft_close": "2026-04-23",
       "leo": {
         "submitted": false,
         "draft8": [],
