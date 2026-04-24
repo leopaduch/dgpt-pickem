@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-20T04:55:29.021Z",
+  "updated_at": "2026-04-24T04:52:19.094Z",
   "season": 2026,
   "events": [
     {
@@ -86,7 +86,7 @@
       "course": "Shoal Creek",
       "start": "2026-04-24",
       "end": "2026-04-26",
-      "status": "upcoming",
+      "status": "live",
       "winner_mpo": null,
       "winner_fpo": null,
       "draft_open": "2026-04-20",
