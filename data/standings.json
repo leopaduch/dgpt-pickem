@@ -27,7 +27,7 @@
       "name": "Isaac Robinson",
       "initials": "IR",
       "sponsor": "Discraft",
-      "pts": 610.92,
+      "pts": 620.92,
       "wins": 0,
       "top10": 2,
       "banned": false
@@ -47,7 +47,7 @@
       "name": "Niklas Anttila*",
       "initials": "NA",
       "sponsor": "",
-      "pts": 554.42,
+      "pts": 564.42,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -57,7 +57,7 @@
       "name": "Adam Hammes",
       "initials": "AH",
       "sponsor": "Innova",
-      "pts": 511,
+      "pts": 516,
       "wins": 0,
       "top10": 2,
       "banned": false
@@ -157,7 +157,7 @@
       "name": "Joseph Anderson",
       "initials": "JA",
       "sponsor": "Prodigy",
-      "pts": 366.67,
+      "pts": 371.67,
       "wins": 0,
       "top10": 2,
       "banned": false
@@ -177,7 +177,7 @@
       "name": "Jake Monn",
       "initials": "JM",
       "sponsor": "Dynamic Discs",
-      "pts": 303.12,
+      "pts": 308.12,
       "wins": 0,
       "top10": 1,
       "banned": false
@@ -194,6 +194,16 @@
     },
     {
       "rank": 20,
+      "name": "Andrew Marwede",
+      "initials": "AM",
+      "sponsor": "Discraft",
+      "pts": 296.5,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 21,
       "name": "Cole Redalen*",
       "initials": "CR",
       "sponsor": "",
@@ -203,21 +213,11 @@
       "banned": false
     },
     {
-      "rank": 21,
+      "rank": 22,
       "name": "Jesse Nieminen",
       "initials": "JN",
       "sponsor": "",
       "pts": 294.5,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 22,
-      "name": "Andrew Marwede",
-      "initials": "AM",
-      "sponsor": "Discraft",
-      "pts": 291.5,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -264,20 +264,20 @@
     },
     {
       "rank": 27,
-      "name": "Gavin Babcock",
-      "initials": "GB",
+      "name": "Paul Krans",
+      "initials": "PK",
       "sponsor": "",
-      "pts": 255.25,
+      "pts": 256.08,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 28,
-      "name": "Paul Krans",
-      "initials": "PK",
+      "name": "Gavin Babcock",
+      "initials": "GB",
       "sponsor": "",
-      "pts": 246.08,
+      "pts": 255.25,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -294,6 +294,16 @@
     },
     {
       "rank": 30,
+      "name": "Mauri Villmann",
+      "initials": "MV",
+      "sponsor": "",
+      "pts": 226,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 31,
       "name": "Parker Welck",
       "initials": "PW",
       "sponsor": "MVP",
@@ -303,7 +313,7 @@
       "banned": false
     },
     {
-      "rank": 31,
+      "rank": 32,
       "name": "Braeden Sides",
       "initials": "BS",
       "sponsor": "",
@@ -313,17 +323,17 @@
       "banned": false
     },
     {
-      "rank": 32,
-      "name": "Mauri Villmann",
-      "initials": "MV",
-      "sponsor": "",
-      "pts": 221,
+      "rank": 33,
+      "name": "Chandler Kramer",
+      "initials": "CK",
+      "sponsor": "MVP",
+      "pts": 217.23,
       "wins": 0,
-      "top10": 0,
+      "top10": 1,
       "banned": false
     },
     {
-      "rank": 33,
+      "rank": 34,
       "name": "Harper Thompson",
       "initials": "HT",
       "sponsor": "Discraft",
@@ -333,7 +343,7 @@
       "banned": false
     },
     {
-      "rank": 34,
+      "rank": 35,
       "name": "Robert Burridge",
       "initials": "RB",
       "sponsor": "",
@@ -343,7 +353,7 @@
       "banned": false
     },
     {
-      "rank": 35,
+      "rank": 36,
       "name": "Austin Turner",
       "initials": "AT",
       "sponsor": "",
@@ -353,23 +363,13 @@
       "banned": false
     },
     {
-      "rank": 36,
+      "rank": 37,
       "name": "Zach Arlinghaus",
       "initials": "ZA",
       "sponsor": "",
       "pts": 212.92,
       "wins": 0,
       "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 37,
-      "name": "Chandler Kramer",
-      "initials": "CK",
-      "sponsor": "MVP",
-      "pts": 212.23,
-      "wins": 0,
-      "top10": 1,
       "banned": false
     },
     {
@@ -503,5 +503,5 @@
       "banned": false
     }
   ],
-  "updated_at": "2026-05-03T23:11:31.429Z"
+  "updated_at": "2026-05-04T00:08:23.798Z"
 }
