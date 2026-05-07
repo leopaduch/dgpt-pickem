@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-27T00:05:55.022Z",
+  "updated_at": "2026-05-07T05:28:59.445Z",
   "season": 2026,
   "events": [
     {
@@ -101,7 +101,7 @@
       "course": "Harvey Penick / Sprinkle Valley",
       "start": "2026-05-07",
       "end": "2026-05-10",
-      "status": "upcoming",
+      "status": "live",
       "winner_mpo": null,
       "winner_fpo": null,
       "draft_open": "2026-05-04",

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-26T00:03:03.246Z",
+  "updated_at": "2026-05-07T05:28:59.445Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -233,7 +233,7 @@
       "location": "Austin, TX",
       "points_available": 160,
       "first_pick": "leo",
-      "status": "upcoming",
+      "status": "locked",
       "result": null,
       "winner": null,
       "winning_team": null,
