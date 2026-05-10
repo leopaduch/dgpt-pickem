@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-07T05:28:59.445Z",
+  "updated_at": "2026-05-10T05:34:26.085Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -12,7 +12,7 @@
   "season_score": {
     "leo": 20,
     "joe": 40,
-    "rollover": 140
+    "rollover": 300
   },
   "weeks": [
     {
@@ -233,14 +233,43 @@
       "location": "Austin, TX",
       "points_available": 160,
       "first_pick": "leo",
-      "status": "locked",
+      "status": "done",
+      "result": "push",
+      "winner": "Gannon Buhr",
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": 8,
+      "draft_open": "2026-05-04",
+      "draft_close": "2026-05-06",
+      "leo": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
+    },
+    {
+      "week": 8,
+      "event": "OTB Open",
+      "location": "Stockton, CA",
+      "points_available": 320,
+      "first_pick": "joe",
+      "status": "upcoming",
       "result": null,
       "winner": null,
       "winning_team": null,
       "points_awarded": 0,
       "rolled_to": null,
-      "draft_open": "2026-05-04",
-      "draft_close": "2026-05-06",
+      "draft_open": "2026-05-18",
+      "draft_close": "2026-05-20",
       "leo": {
         "submitted": false,
         "draft8": [],
