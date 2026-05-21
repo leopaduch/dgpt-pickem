@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-10T05:34:26.085Z",
+  "updated_at": "2026-05-21T06:06:45.885Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -262,7 +262,7 @@
       "location": "Stockton, CA",
       "points_available": 320,
       "first_pick": "joe",
-      "status": "upcoming",
+      "status": "locked",
       "result": null,
       "winner": null,
       "winning_team": null,
