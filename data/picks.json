@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T06:06:45.885Z",
+  "updated_at": "2026-05-24T01:27:11.107Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -12,7 +12,7 @@
   "season_score": {
     "leo": 20,
     "joe": 40,
-    "rollover": 300
+    "rollover": 620
   },
   "weeks": [
     {
@@ -262,14 +262,43 @@
       "location": "Stockton, CA",
       "points_available": 320,
       "first_pick": "joe",
-      "status": "locked",
+      "status": "done",
+      "result": "push",
+      "winner": "Gannon Buhr",
+      "winning_team": null,
+      "points_awarded": 0,
+      "rolled_to": 9,
+      "draft_open": "2026-05-18",
+      "draft_close": "2026-05-20",
+      "leo": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      },
+      "joe": {
+        "submitted": false,
+        "draft8": [],
+        "forced6": [],
+        "resolved_picks": [],
+        "forced_pick": null
+      }
+    },
+    {
+      "week": 9,
+      "event": "European Open",
+      "location": "Tallinn, Estonia",
+      "points_available": 640,
+      "first_pick": "leo",
+      "status": "upcoming",
       "result": null,
       "winner": null,
       "winning_team": null,
       "points_awarded": 0,
       "rolled_to": null,
-      "draft_open": "2026-05-18",
-      "draft_close": "2026-05-20",
+      "draft_open": "2026-06-15",
+      "draft_close": "2026-06-17",
       "leo": {
         "submitted": false,
         "draft8": [],
