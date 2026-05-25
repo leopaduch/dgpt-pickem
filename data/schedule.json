@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-21T06:06:45.886Z",
+  "updated_at": "2026-05-25T06:23:56.973Z",
   "season": 2026,
   "events": [
     {
@@ -116,7 +116,7 @@
       "course": "Swenson Park",
       "start": "2026-05-21",
       "end": "2026-05-24",
-      "status": "live",
+      "status": "done",
       "winner_mpo": null,
       "winner_fpo": null,
       "draft_open": "2026-05-18",
