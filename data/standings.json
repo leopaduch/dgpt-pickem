@@ -7,7 +7,7 @@
       "name": "Gannon Buhr*",
       "initials": "GB",
       "sponsor": "",
-      "pts": 1206.44,
+      "pts": 1226.44,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -117,7 +117,7 @@
       "name": "Aaron Gossage",
       "initials": "AG",
       "sponsor": "Dynamic Discs",
-      "pts": 532.58,
+      "pts": 537.58,
       "wins": 0,
       "top10": 2,
       "banned": false
@@ -127,7 +127,7 @@
       "name": "Luke Taylor",
       "initials": "LT",
       "sponsor": "Discmania",
-      "pts": 517.35,
+      "pts": 527.35,
       "wins": 0,
       "top10": 1,
       "banned": false
@@ -147,7 +147,7 @@
       "name": "Andrew Marwede",
       "initials": "AM",
       "sponsor": "Discraft",
-      "pts": 483.83,
+      "pts": 493.83,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -167,7 +167,7 @@
       "name": "Joseph Anderson",
       "initials": "JA",
       "sponsor": "Prodigy",
-      "pts": 469,
+      "pts": 474,
       "wins": 0,
       "top10": 2,
       "banned": false
@@ -177,7 +177,7 @@
       "name": "Gavin Babcock",
       "initials": "GB",
       "sponsor": "",
-      "pts": 461.92,
+      "pts": 466.92,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -247,7 +247,7 @@
       "name": "Jake Monn",
       "initials": "JM",
       "sponsor": "Dynamic Discs",
-      "pts": 390.79,
+      "pts": 395.79,
       "wins": 0,
       "top10": 1,
       "banned": false
@@ -287,7 +287,7 @@
       "name": "Eagle McMahon",
       "initials": "EM",
       "sponsor": "",
-      "pts": 340.75,
+      "pts": 350.75,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -364,22 +364,22 @@
     },
     {
       "rank": 37,
+      "name": "Braeden Sides",
+      "initials": "BS",
+      "sponsor": "",
+      "pts": 290.67,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 38,
       "name": "Ty Love",
       "initials": "TL",
       "sponsor": "Discraft",
       "pts": 287.17,
       "wins": 0,
       "top10": 1,
-      "banned": false
-    },
-    {
-      "rank": 38,
-      "name": "Braeden Sides",
-      "initials": "BS",
-      "sponsor": "",
-      "pts": 285.67,
-      "wins": 0,
-      "top10": 0,
       "banned": false
     },
     {
@@ -503,5 +503,5 @@
       "banned": false
     }
   ],
-  "updated_at": "2026-05-31T23:57:00.908Z"
+  "updated_at": "2026-06-01T06:51:27.090Z"
 }
