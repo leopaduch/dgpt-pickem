@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-24T01:27:11.107Z",
+  "updated_at": "2026-06-18T06:48:16.566Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -291,7 +291,7 @@
       "location": "Tallinn, Estonia",
       "points_available": 640,
       "first_pick": "leo",
-      "status": "upcoming",
+      "status": "locked",
       "result": null,
       "winner": null,
       "winning_team": null,
