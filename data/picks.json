@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T06:48:16.566Z",
+  "updated_at": "2026-06-21T00:02:43.837Z",
   "season": 2026,
   "game_config": {
     "banned_players": [
@@ -12,7 +12,7 @@
   "season_score": {
     "leo": 20,
     "joe": 40,
-    "rollover": 620
+    "rollover": 1260
   },
   "weeks": [
     {
@@ -291,12 +291,12 @@
       "location": "Tallinn, Estonia",
       "points_available": 640,
       "first_pick": "leo",
-      "status": "locked",
-      "result": null,
-      "winner": null,
+      "status": "done",
+      "result": "push",
+      "winner": "Gannon Buhr",
       "winning_team": null,
       "points_awarded": 0,
-      "rolled_to": null,
+      "rolled_to": 10,
       "draft_open": "2026-06-15",
       "draft_close": "2026-06-17",
       "leo": {
