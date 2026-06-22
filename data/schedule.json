@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-18T06:48:16.567Z",
+  "updated_at": "2026-06-22T00:13:14.867Z",
   "season": 2026,
   "events": [
     {
@@ -131,7 +131,7 @@
       "course": "TBD",
       "start": "2026-06-18",
       "end": "2026-06-21",
-      "status": "live",
+      "status": "done",
       "winner_mpo": null,
       "winner_fpo": null,
       "draft_open": "2026-06-15",
