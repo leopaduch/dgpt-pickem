@@ -7,7 +7,7 @@
       "name": "Gannon Buhr*",
       "initials": "GB",
       "sponsor": "",
-      "pts": 1970.44,
+      "pts": 1990.44,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -347,13 +347,23 @@
       "name": "Parker Welck",
       "initials": "PW",
       "sponsor": "MVP",
-      "pts": 457.54,
+      "pts": 467.54,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 36,
+      "name": "Clay Edwards",
+      "initials": "CE",
+      "sponsor": "",
+      "pts": 432.57,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 37,
       "name": "Evan Scott",
       "initials": "ES",
       "sponsor": "",
@@ -363,7 +373,7 @@
       "banned": false
     },
     {
-      "rank": 37,
+      "rank": 38,
       "name": "Albert Tamm",
       "initials": "AT",
       "sponsor": "",
@@ -373,17 +383,17 @@
       "banned": false
     },
     {
-      "rank": 38,
-      "name": "Clay Edwards",
-      "initials": "CE",
+      "rank": 39,
+      "name": "Robert Burridge",
+      "initials": "RB",
       "sponsor": "",
-      "pts": 427.57,
+      "pts": 409.17,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
-      "rank": 39,
+      "rank": 40,
       "name": "Harry Chace",
       "initials": "HC",
       "sponsor": "",
@@ -393,7 +403,7 @@
       "banned": false
     },
     {
-      "rank": 40,
+      "rank": 41,
       "name": "Lauri Lehtinen",
       "initials": "LL",
       "sponsor": "",
@@ -403,23 +413,13 @@
       "banned": false
     },
     {
-      "rank": 41,
+      "rank": 42,
       "name": "Evan Smith",
       "initials": "ES",
       "sponsor": "Innova",
       "pts": 405.67,
       "wins": 0,
       "top10": 2,
-      "banned": false
-    },
-    {
-      "rank": 42,
-      "name": "Robert Burridge",
-      "initials": "RB",
-      "sponsor": "",
-      "pts": 404.17,
-      "wins": 0,
-      "top10": 0,
       "banned": false
     },
     {
@@ -464,6 +464,16 @@
     },
     {
       "rank": 47,
+      "name": "Matthew Orum",
+      "initials": "MO",
+      "sponsor": "MVP",
+      "pts": 333.1,
+      "wins": 0,
+      "top10": 1,
+      "banned": false
+    },
+    {
+      "rank": 48,
       "name": "James Conrad",
       "initials": "JC",
       "sponsor": "",
@@ -473,7 +483,7 @@
       "banned": false
     },
     {
-      "rank": 48,
+      "rank": 49,
       "name": "Harper Thompson",
       "initials": "HT",
       "sponsor": "",
@@ -483,7 +493,7 @@
       "banned": false
     },
     {
-      "rank": 49,
+      "rank": 50,
       "name": "Chandler Kramer",
       "initials": "CK",
       "sponsor": "MVP",
@@ -491,17 +501,7 @@
       "wins": 0,
       "top10": 1,
       "banned": false
-    },
-    {
-      "rank": 50,
-      "name": "Matthew Orum",
-      "initials": "MO",
-      "sponsor": "MVP",
-      "pts": 323.1,
-      "wins": 0,
-      "top10": 1,
-      "banned": false
     }
   ],
-  "updated_at": "2026-07-26T23:26:35.812Z"
+  "updated_at": "2026-07-27T01:05:56.578Z"
 }
