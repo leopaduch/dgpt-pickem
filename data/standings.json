@@ -7,7 +7,7 @@
       "name": "Gannon Buhr*",
       "initials": "GB",
       "sponsor": "",
-      "pts": 1990.44,
+      "pts": 2063.11,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -17,7 +17,7 @@
       "name": "Richard Wysocki*",
       "initials": "RW",
       "sponsor": "",
-      "pts": 1446.33,
+      "pts": 1532.11,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -27,7 +27,7 @@
       "name": "Calvin Heimburg*",
       "initials": "CH",
       "sponsor": "",
-      "pts": 1438.49,
+      "pts": 1482.78,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -37,33 +37,53 @@
       "name": "Isaac Robinson",
       "initials": "IR",
       "sponsor": "Discraft",
-      "pts": 1231.08,
+      "pts": 1319.36,
       "wins": 0,
       "top10": 2,
       "banned": false
     },
     {
       "rank": 5,
-      "name": "Anthony Barela",
-      "initials": "AB",
-      "sponsor": "",
-      "pts": 1140.22,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 6,
       "name": "Adam Hammes",
       "initials": "AH",
       "sponsor": "Innova",
-      "pts": 1093.58,
+      "pts": 1226.33,
       "wins": 0,
       "top10": 2,
       "banned": false
     },
     {
+      "rank": 6,
+      "name": "Anthony Barela",
+      "initials": "AB",
+      "sponsor": "",
+      "pts": 1171.38,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
       "rank": 7,
+      "name": "Sullivan Tipton",
+      "initials": "ST",
+      "sponsor": "Discraft",
+      "pts": 1023.4,
+      "wins": 0,
+      "top10": 1,
+      "banned": false
+    },
+    {
+      "rank": 8,
+      "name": "Luke Taylor*",
+      "initials": "LT",
+      "sponsor": "",
+      "pts": 974.68,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 9,
       "name": "Niklas Anttila*",
       "initials": "NA",
       "sponsor": "",
@@ -73,7 +93,7 @@
       "banned": false
     },
     {
-      "rank": 8,
+      "rank": 10,
       "name": "Eagle McMahon*",
       "initials": "EM",
       "sponsor": "",
@@ -83,33 +103,13 @@
       "banned": false
     },
     {
-      "rank": 9,
-      "name": "Sullivan Tipton",
-      "initials": "ST",
-      "sponsor": "Discraft",
-      "pts": 870.07,
-      "wins": 0,
-      "top10": 1,
-      "banned": false
-    },
-    {
-      "rank": 10,
+      "rank": 11,
       "name": "Gavin Babcock",
       "initials": "GB",
       "sponsor": "",
-      "pts": 847.11,
+      "pts": 909.27,
       "wins": 0,
       "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 11,
-      "name": "Luke Taylor",
-      "initials": "LT",
-      "sponsor": "Discmania",
-      "pts": 810.68,
-      "wins": 0,
-      "top10": 1,
       "banned": false
     },
     {
@@ -117,49 +117,49 @@
       "name": "Ezra Robinson",
       "initials": "ER",
       "sponsor": "Kastaplast",
-      "pts": 793.43,
+      "pts": 813.1,
       "wins": 0,
       "top10": 1,
       "banned": false
     },
     {
       "rank": 13,
+      "name": "Silas Schultz",
+      "initials": "SS",
+      "sponsor": "",
+      "pts": 788.55,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 14,
       "name": "Aaron Gossage",
       "initials": "AG",
       "sponsor": "Dynamic Discs",
-      "pts": 758.75,
+      "pts": 788.42,
       "wins": 0,
       "top10": 2,
       "banned": false
     },
     {
-      "rank": 14,
-      "name": "Silas Schultz",
-      "initials": "SS",
-      "sponsor": "",
-      "pts": 746.55,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
       "rank": 15,
-      "name": "Jaden Rye",
-      "initials": "JR",
-      "sponsor": "Prodigy",
-      "pts": 708.33,
+      "name": "Raven Newsom",
+      "initials": "RN",
+      "sponsor": "Innova",
+      "pts": 758.11,
       "wins": 0,
-      "top10": 0,
+      "top10": 1,
       "banned": false
     },
     {
       "rank": 16,
-      "name": "Raven Newsom",
-      "initials": "RN",
-      "sponsor": "Innova",
-      "pts": 695.11,
+      "name": "Cole Redalen*",
+      "initials": "CR",
+      "sponsor": "",
+      "pts": 749.28,
       "wins": 0,
-      "top10": 1,
+      "top10": 0,
       "banned": false
     },
     {
@@ -167,43 +167,53 @@
       "name": "Casey White",
       "initials": "CW",
       "sponsor": "Kastaplast",
-      "pts": 683.83,
+      "pts": 746.5,
       "wins": 0,
       "top10": 1,
       "banned": false
     },
     {
       "rank": 18,
-      "name": "Cole Redalen*",
-      "initials": "CR",
+      "name": "Zachary Nash",
+      "initials": "ZN",
       "sponsor": "",
-      "pts": 661.61,
+      "pts": 715.08,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 19,
-      "name": "Bradley Williams",
-      "initials": "BW",
-      "sponsor": "",
-      "pts": 640,
+      "name": "Jaden Rye",
+      "initials": "JR",
+      "sponsor": "Prodigy",
+      "pts": 710.44,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 20,
+      "name": "Bradley Williams",
+      "initials": "BW",
+      "sponsor": "",
+      "pts": 688.95,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 21,
       "name": "Joseph Anderson",
       "initials": "JA",
       "sponsor": "Prodigy",
-      "pts": 635.17,
+      "pts": 654.28,
       "wins": 0,
       "top10": 2,
       "banned": false
     },
     {
-      "rank": 21,
+      "rank": 22,
       "name": "Jesse Nieminen",
       "initials": "JN",
       "sponsor": "",
@@ -213,57 +223,67 @@
       "banned": false
     },
     {
-      "rank": 22,
-      "name": "Zachary Nash",
-      "initials": "ZN",
-      "sponsor": "",
-      "pts": 611.75,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
       "rank": 23,
       "name": "Jake Monn",
       "initials": "JM",
       "sponsor": "Dynamic Discs",
-      "pts": 593.96,
+      "pts": 600.56,
       "wins": 0,
       "top10": 1,
       "banned": false
     },
     {
       "rank": 24,
+      "name": "Chris Dickerson",
+      "initials": "CD",
+      "sponsor": "Trilogy",
+      "pts": 599.83,
+      "wins": 0,
+      "top10": 1,
+      "banned": false
+    },
+    {
+      "rank": 25,
       "name": "Kyle Klein",
       "initials": "KK",
       "sponsor": "Latitude 64",
-      "pts": 569.06,
+      "pts": 581.72,
       "wins": 0,
       "top10": 2,
       "banned": false
     },
     {
-      "rank": 25,
+      "rank": 26,
       "name": "Braeden Sides",
       "initials": "BS",
       "sponsor": "",
-      "pts": 556.6,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 26,
-      "name": "Andrew Marwede",
-      "initials": "AM",
-      "sponsor": "Discraft",
-      "pts": 537.83,
+      "pts": 576.32,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 27,
+      "name": "Andrew Marwede",
+      "initials": "AM",
+      "sponsor": "Discraft",
+      "pts": 571.83,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 28,
+      "name": "Paul Krans",
+      "initials": "PK",
+      "sponsor": "",
+      "pts": 545.52,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 29,
       "name": "Jakub Semerád",
       "initials": "JS",
       "sponsor": "",
@@ -273,7 +293,17 @@
       "banned": false
     },
     {
-      "rank": 28,
+      "rank": 30,
+      "name": "Paul Ulibarri*",
+      "initials": "PU",
+      "sponsor": "",
+      "pts": 522.06,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 31,
       "name": "Mauri Villmann",
       "initials": "MV",
       "sponsor": "",
@@ -283,27 +313,47 @@
       "banned": false
     },
     {
-      "rank": 29,
-      "name": "Chris Dickerson",
-      "initials": "CD",
-      "sponsor": "Trilogy",
-      "pts": 502.5,
-      "wins": 0,
-      "top10": 1,
-      "banned": false
-    },
-    {
-      "rank": 30,
-      "name": "Austin Turner",
-      "initials": "AT",
+      "rank": 32,
+      "name": "Corey Ellis",
+      "initials": "CE",
       "sponsor": "",
-      "pts": 490.07,
+      "pts": 512.5,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
-      "rank": 31,
+      "rank": 33,
+      "name": "Parker Welck",
+      "initials": "PW",
+      "sponsor": "MVP",
+      "pts": 501.54,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 34,
+      "name": "Austin Turner",
+      "initials": "AT",
+      "sponsor": "",
+      "pts": 499.07,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 35,
+      "name": "Simon Lizotte",
+      "initials": "SL",
+      "sponsor": "",
+      "pts": 493.17,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 36,
       "name": "Väinö Mäkelä",
       "initials": "VM",
       "sponsor": "",
@@ -313,61 +363,11 @@
       "banned": false
     },
     {
-      "rank": 32,
-      "name": "Paul Ulibarri*",
-      "initials": "PU",
-      "sponsor": "",
-      "pts": 472.06,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 33,
-      "name": "Paul Krans",
-      "initials": "PK",
-      "sponsor": "",
-      "pts": 470.85,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 34,
-      "name": "Corey Ellis",
-      "initials": "CE",
-      "sponsor": "",
-      "pts": 469.83,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 35,
-      "name": "Parker Welck",
-      "initials": "PW",
-      "sponsor": "MVP",
-      "pts": 467.54,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 36,
-      "name": "Clay Edwards",
-      "initials": "CE",
-      "sponsor": "",
-      "pts": 432.57,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
       "rank": 37,
       "name": "Evan Scott",
       "initials": "ES",
       "sponsor": "",
-      "pts": 429.82,
+      "pts": 468.22,
       "wins": 0,
       "top10": 0,
       "banned": false
@@ -377,23 +377,43 @@
       "name": "Albert Tamm",
       "initials": "AT",
       "sponsor": "",
-      "pts": 429.81,
+      "pts": 457.81,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 39,
-      "name": "Robert Burridge",
-      "initials": "RB",
+      "name": "Clay Edwards",
+      "initials": "CE",
       "sponsor": "",
-      "pts": 409.17,
+      "pts": 447.57,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
       "rank": 40,
+      "name": "Matthew Orum",
+      "initials": "MO",
+      "sponsor": "MVP",
+      "pts": 420.77,
+      "wins": 0,
+      "top10": 1,
+      "banned": false
+    },
+    {
+      "rank": 41,
+      "name": "Robert Burridge",
+      "initials": "RB",
+      "sponsor": "",
+      "pts": 420.5,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 42,
       "name": "Harry Chace",
       "initials": "HC",
       "sponsor": "",
@@ -403,7 +423,7 @@
       "banned": false
     },
     {
-      "rank": 41,
+      "rank": 43,
       "name": "Lauri Lehtinen",
       "initials": "LL",
       "sponsor": "",
@@ -413,7 +433,7 @@
       "banned": false
     },
     {
-      "rank": 42,
+      "rank": 44,
       "name": "Evan Smith",
       "initials": "ES",
       "sponsor": "Innova",
@@ -423,17 +443,37 @@
       "banned": false
     },
     {
-      "rank": 43,
-      "name": "Simon Lizotte",
-      "initials": "SL",
+      "rank": 45,
+      "name": "Joel Freeman",
+      "initials": "JF",
       "sponsor": "",
-      "pts": 371.39,
+      "pts": 393.83,
       "wins": 0,
       "top10": 0,
       "banned": false
     },
     {
-      "rank": 44,
+      "rank": 46,
+      "name": "Jake Hebenheimer",
+      "initials": "JH",
+      "sponsor": "",
+      "pts": 377.27,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 47,
+      "name": "Andrew Miranda",
+      "initials": "AM",
+      "sponsor": "",
+      "pts": 372.89,
+      "wins": 0,
+      "top10": 0,
+      "banned": false
+    },
+    {
+      "rank": 48,
       "name": "Ezra Aderhold",
       "initials": "EA",
       "sponsor": "",
@@ -443,7 +483,7 @@
       "banned": false
     },
     {
-      "rank": 45,
+      "rank": 49,
       "name": "Eetu Tuominen",
       "initials": "ET",
       "sponsor": "",
@@ -453,55 +493,15 @@
       "banned": false
     },
     {
-      "rank": 46,
-      "name": "Andrew Miranda",
-      "initials": "AM",
-      "sponsor": "",
-      "pts": 338.89,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 47,
-      "name": "Matthew Orum",
-      "initials": "MO",
-      "sponsor": "MVP",
-      "pts": 333.1,
-      "wins": 0,
-      "top10": 1,
-      "banned": false
-    },
-    {
-      "rank": 48,
-      "name": "James Conrad",
-      "initials": "JC",
-      "sponsor": "",
-      "pts": 330.69,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
-      "rank": 49,
-      "name": "Harper Thompson",
-      "initials": "HT",
-      "sponsor": "",
-      "pts": 327.68,
-      "wins": 0,
-      "top10": 0,
-      "banned": false
-    },
-    {
       "rank": 50,
-      "name": "Chandler Kramer",
-      "initials": "CK",
-      "sponsor": "MVP",
-      "pts": 324.57,
+      "name": "Ty Love",
+      "initials": "TL",
+      "sponsor": "",
+      "pts": 356.5,
       "wins": 0,
-      "top10": 1,
+      "top10": 0,
       "banned": false
     }
   ],
-  "updated_at": "2026-08-02T23:25:44.775Z"
+  "updated_at": "2026-08-03T01:02:52.926Z"
 }
