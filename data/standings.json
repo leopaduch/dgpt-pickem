@@ -124,7 +124,7 @@
     },
     {
       "rank": 13,
-      "name": "Silas Schultz",
+      "name": "Silas Schultz*",
       "initials": "SS",
       "sponsor": "",
       "pts": 882.8,
@@ -503,5 +503,5 @@
       "banned": false
     }
   ],
-  "updated_at": "2026-08-30T21:43:08.223Z"
+  "updated_at": "2026-08-31T00:00:44.821Z"
 }
